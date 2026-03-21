@@ -9,6 +9,7 @@ interface DataEditorProps {
   chartTypeId: ChartTypeId;
   data: ChartData;
   onChange: (data: ChartData) => void;
+  onLoadSample?: () => void;
 }
 
 const DATA_SHAPE_HINTS: Record<DataShape, string> = {
@@ -43,7 +44,7 @@ const SHAPE_EXAMPLES: Partial<Record<DataShape, string>> = {
   geo: 'Paste country codes and values:\nCode, Value\nUS, 63544\nGB, 42300\nDE, 48636',
 };
 
-export default function DataEditor({ chartTypeId, data, onChange }: DataEditorProps) {
+export default function DataEditor({ chartTypeId, data, onChange, onLoadSample }: DataEditorProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const meta = CHART_CATALOGUE.find((c) => c.id === chartTypeId);
   const dataShape = meta?.dataShape ?? 'single-series';
@@ -139,9 +140,12 @@ export default function DataEditor({ chartTypeId, data, onChange }: DataEditorPr
   };
 
   const handleLoadSample = () => {
-    onChange(getSampleData(chartTypeId));
+    if (onLoadSample) {
+      onLoadSample();
+    } else {
+      onChange(getSampleData(chartTypeId));
+    }
     setFeedback({ type: 'success', message: 'Sample data loaded' });
-
   };
 
   return (

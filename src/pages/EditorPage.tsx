@@ -126,6 +126,20 @@ const EditorPage: React.FC = () => {
     }
   }, [typeId, data, options]);
 
+  const handleLoadSample = () => {
+    if (!typeId || !meta) return;
+    // Clear saved state so we get a true reset
+    try { localStorage.removeItem(`chartcraft:${typeId}`); } catch {}
+    const sample = getSampleData(typeId as ChartTypeId);
+    setData(sample);
+    setOptions({
+      ...DEFAULT_OPTIONS,
+      title: meta.name || '',
+      subtitle: meta.description || '',
+      source: 'Source: Your data',
+    });
+  };
+
   if (!meta) {
     return (
       <div style={{ padding: 40, textAlign: 'center' }}>
@@ -294,7 +308,7 @@ const EditorPage: React.FC = () => {
         {/* Right: Controls -- data first, then options, then share */}
         {!isEmbed && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-            <DataEditor chartTypeId={meta.id} data={data} onChange={setData} />
+            <DataEditor chartTypeId={meta.id} data={data} onChange={setData} onLoadSample={handleLoadSample} />
             <OptionsPanel options={options} onChange={setOptions} />
             <SharePanel typeId={meta.id} data={data} options={options} />
           </div>

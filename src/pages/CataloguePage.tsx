@@ -19,7 +19,7 @@ const CataloguePage: React.FC = () => {
           letterSpacing: -0.5,
           lineHeight: 1.15,
         }}>
-          Choose a chart type
+          Your data, beautifully told
         </h1>
         <p style={{
           fontSize: 15,
@@ -27,9 +27,9 @@ const CataloguePage: React.FC = () => {
           marginTop: 8,
           lineHeight: 1.5,
         }}>
-          28 publication-quality visualisations in The Economist style.
+          {CHART_CATALOGUE.length} publication-quality charts styled after The Economist.
           <br />
-          Pick one, add your data, and export.
+          Pick one, drop in your data, and export in seconds.
         </p>
       </div>
 
