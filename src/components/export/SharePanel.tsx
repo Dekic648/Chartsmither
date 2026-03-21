@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Link2, Code, Copy, Check } from 'lucide-react';
+import { Link2, Code, Check } from 'lucide-react';
 import type { ChartData, ChartOptions } from '../../types/chart';
 import { getShareUrl, getEmbedCode, copyToClipboard } from '../../utils/share';
 

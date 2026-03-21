@@ -4,7 +4,7 @@ import {
   ECONOMIST_FONTS,
   getColor,
 } from '../../theme/economist';
-import type { ChartData, ChartOptions } from '../../types/chart';
+import type { ChartOptions } from '../../types/chart';
 import type { SVGChartProps } from './index';
 
 // ---------------------------------------------------------------------------
@@ -500,7 +500,6 @@ export const GanttChart: React.FC<SVGChartProps> = ({
   const dynamicH = Math.max(H, headerH + 60 + items.length * rowH + sourceH + 20);
   const margin = { top: headerH + 8, right: 16, bottom: 20 + sourceH, left: 120 };
   const plotW = W - margin.left - margin.right;
-  const plotH = dynamicH - margin.top - margin.bottom;
 
   // Extract start/end
   const starts = items.map((it) => Number(it.start ?? it.value));

@@ -312,7 +312,7 @@ export const ParallelCoordinatesChart: React.FC<SVGChartProps> = ({
           );
         })}
         {/* Data lines */}
-        {rows.map((rowName, r) => {
+        {rows.map((_rowName, r) => {
           const points = cols.map((_, c) => {
             const x = nAxes > 1 ? c * axisSpacing : plotW / 2;
             return `${x},${yPos(r, c)}`;
@@ -452,7 +452,7 @@ export const StreamGraphChart: React.FC<SVGChartProps> = ({
       {renderHeader(options, W)}
       <g transform={`translate(${margin.left},${margin.top})`}>
         {/* Streams */}
-        {series.map((s, si) => (
+        {series.map((_s, si) => (
           <path
             key={`stream-${si}`}
             d={buildStreamPath(stackTop[si], stackBot[si])}
@@ -551,7 +551,6 @@ export const ArcDiagramChart: React.FC<SVGChartProps> = ({
         {arcs.map(({ from, to, arcIdx }) => {
           const x1 = nodeX[from];
           const x2 = nodeX[to];
-          const midX = (x1 + x2) / 2;
           const dist = Math.abs(x2 - x1);
           const arcR = dist / 2;
           return (
@@ -617,7 +616,6 @@ export const MarimekkoChart: React.FC<SVGChartProps> = ({
   const plotH = H - margin.top - margin.bottom;
 
   const nCols = labels.length;
-  const nSeries = series.length;
   const gap = 2;
 
   // Column totals determine widths

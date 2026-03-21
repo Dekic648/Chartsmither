@@ -4,7 +4,6 @@ import type { ChartTypeId, ChartData, DataShape } from '../../types/chart';
 import { CHART_CATALOGUE } from '../../types/catalogue';
 import { getSampleData } from '../../utils/sampleData';
 import { smartParse, validateData, detectFormat } from '../../utils/dataTransform';
-import type { ValidationResult } from '../../utils/dataTransform';
 
 interface DataEditorProps {
   chartTypeId: ChartTypeId;
@@ -52,7 +51,6 @@ export default function DataEditor({ chartTypeId, data, onChange }: DataEditorPr
   const [rawText, setRawText] = useState('');
   const [editMode, setEditMode] = useState<'json' | 'paste'>('json');
   const [feedback, setFeedback] = useState<{ type: 'success' | 'error' | 'warning'; message: string } | null>(null);
-  const [validation, setValidation] = useState<ValidationResult | null>(null);
 
   const jsonText = JSON.stringify(data, null, 2);
 
@@ -63,7 +61,7 @@ export default function DataEditor({ chartTypeId, data, onChange }: DataEditorPr
     try {
       const parsed = JSON.parse(raw) as ChartData;
       const val = validateData(parsed, dataShape);
-      setValidation(val);
+
       if (val.valid) {
         setFeedback(null);
       } else {
@@ -85,7 +83,7 @@ export default function DataEditor({ chartTypeId, data, onChange }: DataEditorPr
     const result = smartParse(rawText, dataShape);
     if (result.data) {
       const val = validateData(result.data, dataShape);
-      setValidation(val);
+
       onChange(result.data);
       setFeedback({ type: 'success', message: result.message });
       setEditMode('json');
@@ -144,7 +142,7 @@ export default function DataEditor({ chartTypeId, data, onChange }: DataEditorPr
   const handleLoadSample = () => {
     onChange(getSampleData(chartTypeId));
     setFeedback({ type: 'success', message: 'Sample data loaded' });
-    setValidation(null);
+
   };
 
   return (
