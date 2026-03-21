@@ -275,7 +275,11 @@ const EditorPage: React.FC = () => {
               title={options.title}
               subtitle={options.subtitle}
               source={options.source}
-              legendItems={options.showLegend ? legendItems : undefined}
+              footnote={options.footnote}
+              legendItems={options.legendPosition !== 'none' ? legendItems : undefined}
+              legendPosition={options.legendPosition}
+              titleFontSize={options.titleFontSize}
+              subtitleFontSize={options.subtitleFontSize}
               width={options.width}
             >
               <div style={{ position: 'relative', height: options.height - 100 }}>

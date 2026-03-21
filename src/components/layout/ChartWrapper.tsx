@@ -12,13 +12,17 @@ interface ChartWrapperProps {
   title: string;
   subtitle?: string;
   source?: string;
+  footnote?: string;
   legendItems?: LegendItem[];
+  legendPosition?: 'top' | 'bottom' | 'none';
+  titleFontSize?: number;
+  subtitleFontSize?: number;
   children: React.ReactNode;
   width?: number;
   theme?: BrandTheme;
 }
 
-function buildStyles(t: BrandTheme) {
+function buildStyles(t: BrandTheme, titleFontSize?: number, subtitleFontSize?: number) {
   return {
     wrapper: (width?: number): React.CSSProperties => ({
       width: width ?? '100%',
@@ -39,7 +43,7 @@ function buildStyles(t: BrandTheme) {
 
     title: {
       color: t.masthead.color,
-      fontSize: '1.125rem',
+      fontSize: titleFontSize ? `${titleFontSize}px` : '1.125rem',
       fontWeight: 700,
       fontFamily: t.fonts.title,
       letterSpacing: '-0.01em',
@@ -54,7 +58,7 @@ function buildStyles(t: BrandTheme) {
 
     subtitle: {
       color: t.colors.textSecondary,
-      fontSize: '0.875rem',
+      fontSize: subtitleFontSize ? `${subtitleFontSize}px` : '0.875rem',
       fontFamily: t.fonts.body,
       fontWeight: 400,
       lineHeight: 1.45,
@@ -105,19 +109,45 @@ function buildStyles(t: BrandTheme) {
       margin: 0,
       lineHeight: 1.4,
     } as React.CSSProperties,
+
+    footnoteText: {
+      fontSize: '0.625rem',
+      color: t.colors.textTertiary,
+      fontFamily: t.fonts.body,
+      fontStyle: 'italic' as const,
+      margin: '4px 0 0',
+      lineHeight: 1.4,
+    } as React.CSSProperties,
   };
 }
+
+const LegendBar: React.FC<{ items: LegendItem[]; styles: ReturnType<typeof buildStyles> }> = ({ items, styles }) => (
+  <div style={styles.legend}>
+    {items.map((item) => (
+      <div key={item.label} style={styles.legendEntry}>
+        <span style={styles.legendSwatch(item.color, item.dashed)} />
+        <span>{item.label}</span>
+      </div>
+    ))}
+  </div>
+);
 
 const ChartWrapper: React.FC<ChartWrapperProps> = ({
   title,
   subtitle,
   source,
+  footnote,
   legendItems,
+  legendPosition = 'top',
+  titleFontSize,
+  subtitleFontSize,
   children,
   width,
   theme = economistTheme,
 }) => {
-  const styles = buildStyles(theme);
+  const styles = buildStyles(theme, titleFontSize, subtitleFontSize);
+  const showLegend = legendPosition !== 'none' && legendItems && legendItems.length > 0;
+
   return (
     <div style={styles.wrapper(width)}>
       {/* Masthead */}
@@ -132,25 +162,24 @@ const ChartWrapper: React.FC<ChartWrapperProps> = ({
         </div>
       )}
 
-      {/* Legend */}
-      {legendItems && legendItems.length > 0 && (
-        <div style={styles.legend}>
-          {legendItems.map((item) => (
-            <div key={item.label} style={styles.legendEntry}>
-              <span style={styles.legendSwatch(item.color, item.dashed)} />
-              <span>{item.label}</span>
-            </div>
-          ))}
-        </div>
+      {/* Legend — top */}
+      {showLegend && legendPosition === 'top' && (
+        <LegendBar items={legendItems} styles={styles} />
       )}
 
       {/* Chart content */}
       <div style={styles.content}>{children}</div>
 
-      {/* Source line */}
-      {source && (
+      {/* Legend — bottom */}
+      {showLegend && legendPosition === 'bottom' && (
+        <LegendBar items={legendItems} styles={styles} />
+      )}
+
+      {/* Source + footnote */}
+      {(source || footnote) && (
         <div style={styles.sourceBar}>
-          <p style={styles.sourceText}>Source: {source}</p>
+          {source && <p style={styles.sourceText}>Source: {source}</p>}
+          {footnote && <p style={styles.footnoteText}>{footnote}</p>}
         </div>
       )}
     </div>

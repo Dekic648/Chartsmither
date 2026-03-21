@@ -120,6 +120,14 @@ export interface ChartConfig {
   options: ChartOptions;
 }
 
+export interface ReferenceLine {
+  axis: 'y' | 'x';
+  value: number;
+  label: string;
+  color: string;
+  dashed: boolean;
+}
+
 export interface ChartOptions {
   title: string;
   subtitle: string;
@@ -132,6 +140,26 @@ export interface ChartOptions {
   xAxisLabel: string;
   yAxisFormat: 'number' | 'percent' | 'currency' | 'compact';
   colorOverrides: string[];
+
+  // Phase 1 — Visual polish
+  showDataLabels: boolean;
+  dataLabelPosition: 'top' | 'center' | 'inside' | 'outside';
+  dataLabelFormat: 'value' | 'percent' | 'both';
+  footnote: string;
+  legendPosition: 'top' | 'bottom' | 'none';
+  referenceLines: ReferenceLine[];
+
+  // Phase 2 — Customization depth
+  yAxisMin: number | null;
+  yAxisMax: number | null;
+  xAxisLabelRotation: 0 | 45 | 90;
+  titleFontSize: number;
+  subtitleFontSize: number;
+  decimalPlaces: number;
+  thousandSeparator: boolean;
+  currencySymbol: string;
+  lineWidth: number;
+  pointSize: number;
 }
 
 export const DEFAULT_OPTIONS: ChartOptions = {
@@ -146,4 +174,24 @@ export const DEFAULT_OPTIONS: ChartOptions = {
   xAxisLabel: '',
   yAxisFormat: 'number',
   colorOverrides: [],
+
+  // Phase 1
+  showDataLabels: false,
+  dataLabelPosition: 'top',
+  dataLabelFormat: 'value',
+  footnote: '',
+  legendPosition: 'top',
+  referenceLines: [],
+
+  // Phase 2
+  yAxisMin: null,
+  yAxisMax: null,
+  xAxisLabelRotation: 0,
+  titleFontSize: 18,
+  subtitleFontSize: 14,
+  decimalPlaces: 0,
+  thousandSeparator: true,
+  currencySymbol: '$',
+  lineWidth: 2,
+  pointSize: 3,
 };

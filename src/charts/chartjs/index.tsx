@@ -12,6 +12,8 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+import annotationPlugin from 'chartjs-plugin-annotation';
 import { Line, Bar, Scatter, Bubble, Pie, Doughnut, Radar } from 'react-chartjs-2';
 import type { ChartData, ChartOptions } from '../../types/chart';
 import {
@@ -36,6 +38,8 @@ ChartJS.register(
   Filler,
   Tooltip,
   Legend,
+  ChartDataLabels,
+  annotationPlugin,
 );
 
 // ---------------------------------------------------------------------------
@@ -79,25 +83,38 @@ function resolveColors(count: number, overrides: string[] = []): string[] {
   return base.map((c, i) => overrides[i] ?? c);
 }
 
-/** Format a numeric tick value based on yAxisFormat. */
-function formatTick(value: number | string, format: ChartOptions['yAxisFormat']): string {
+/** Format a numeric tick value based on format settings. */
+function formatTick(
+  value: number | string,
+  format: ChartOptions['yAxisFormat'],
+  opts?: Pick<ChartOptions, 'decimalPlaces' | 'thousandSeparator' | 'currencySymbol'>,
+): string {
   const v = typeof value === 'string' ? parseFloat(value) : value;
   if (isNaN(v)) return String(value);
 
+  const dp = opts?.decimalPlaces ?? 0;
+  const sep = opts?.thousandSeparator ?? true;
+  const cur = opts?.currencySymbol ?? '$';
+
+  const fmtNum = (n: number): string => {
+    if (sep) return n.toLocaleString(undefined, { minimumFractionDigits: dp, maximumFractionDigits: dp });
+    return n.toFixed(dp);
+  };
+
   switch (format) {
     case 'percent':
-      return `${v}%`;
+      return `${fmtNum(v)}%`;
     case 'currency':
-      return v < 0 ? `-$${Math.abs(v).toLocaleString()}` : `$${v.toLocaleString()}`;
+      return v < 0 ? `-${cur}${fmtNum(Math.abs(v))}` : `${cur}${fmtNum(v)}`;
     case 'compact': {
       const abs = Math.abs(v);
       if (abs >= 1_000_000_000) return `${(v / 1_000_000_000).toFixed(1)}B`;
       if (abs >= 1_000_000) return `${(v / 1_000_000).toFixed(1)}M`;
       if (abs >= 1_000) return `${(v / 1_000).toFixed(1)}K`;
-      return v.toString();
+      return fmtNum(v);
     }
     default:
-      return v.toLocaleString();
+      return fmtNum(v);
   }
 }
 
@@ -106,26 +123,96 @@ function buildBaseOptions(
   opts: ChartOptions,
   overrides: Record<string, unknown> = {},
 ): Record<string, unknown> {
-  const yTickCallback = (_value: unknown, _index: number, _ticks: unknown[]) => {
-    // Chart.js passes the raw value as first arg
-    return formatTick(_value as number, opts.yAxisFormat);
-  };
+  const fmtOpts = { decimalPlaces: opts.decimalPlaces, thousandSeparator: opts.thousandSeparator, currencySymbol: opts.currencySymbol };
+
+  const yTickCallback = (_value: unknown) => formatTick(_value as number, opts.yAxisFormat, fmtOpts);
 
   const tooltipFilter = (tooltipItem: { label?: string | null }) =>
     tooltipItem.label != null && tooltipItem.label !== '';
+
+  // Data labels config
+  const datalabels: Record<string, unknown> = opts.showDataLabels
+    ? {
+        display: true,
+        color: ECONOMIST_COLORS.textPrimary,
+        font: { size: 10, family: ECONOMIST_FONTS.sans, weight: 600 },
+        anchor: opts.dataLabelPosition === 'center' ? 'center' : 'end',
+        align: opts.dataLabelPosition === 'center' ? 'center' : 'top',
+        formatter: (value: number) => formatTick(value, opts.yAxisFormat, fmtOpts),
+        padding: 4,
+      }
+    : { display: false };
+
+  // Reference line annotations
+  const annotations: Record<string, unknown> = {};
+  (opts.referenceLines ?? []).forEach((ref, i) => {
+    if (ref.axis === 'y') {
+      annotations[`ref_${i}`] = {
+        type: 'line',
+        yMin: ref.value,
+        yMax: ref.value,
+        borderColor: ref.color || ECONOMIST_COLORS.target,
+        borderWidth: 1.5,
+        borderDash: ref.dashed ? [6, 3] : [],
+        label: {
+          display: !!ref.label,
+          content: ref.label,
+          position: 'end',
+          backgroundColor: 'rgba(255,255,255,0.85)',
+          color: ref.color || ECONOMIST_COLORS.target,
+          font: { size: 10, family: ECONOMIST_FONTS.sans },
+          padding: 4,
+        },
+      };
+    } else {
+      annotations[`ref_${i}`] = {
+        type: 'line',
+        xMin: ref.value,
+        xMax: ref.value,
+        borderColor: ref.color || ECONOMIST_COLORS.target,
+        borderWidth: 1.5,
+        borderDash: ref.dashed ? [6, 3] : [],
+        label: {
+          display: !!ref.label,
+          content: ref.label,
+          position: 'start',
+          backgroundColor: 'rgba(255,255,255,0.85)',
+          color: ref.color || ECONOMIST_COLORS.target,
+          font: { size: 10, family: ECONOMIST_FONTS.sans },
+          padding: 4,
+        },
+      };
+    }
+  });
+
+  // Y-axis scale config
+  const yScale: Record<string, unknown> = {
+    grid: {
+      display: opts.showGrid,
+      color: ECONOMIST_COLORS.gridLine,
+      lineWidth: 0.8,
+    },
+    ticks: {
+      callback: yTickCallback,
+    },
+    title: opts.yAxisLabel
+      ? {
+          display: true,
+          text: opts.yAxisLabel,
+          color: ECONOMIST_COLORS.textSecondary,
+          font: { size: 11, family: ECONOMIST_FONTS.sans },
+        }
+      : { display: false },
+  };
+  if (opts.yAxisMin != null) yScale.min = opts.yAxisMin;
+  if (opts.yAxisMax != null) yScale.max = opts.yAxisMax;
 
   const base: Record<string, unknown> = deepMerge(
     CHARTJS_ECONOMIST_DEFAULTS as unknown as Record<string, unknown>,
     {
       plugins: {
         legend: {
-          display: opts.showLegend,
-          labels: {
-            color: ECONOMIST_COLORS.textPrimary,
-            font: { size: 11, family: ECONOMIST_FONTS.sans },
-            boxWidth: 12,
-            padding: 12,
-          },
+          display: false, // handled by ChartWrapper
         },
         tooltip: {
           filter: tooltipFilter,
@@ -137,10 +224,18 @@ function buildBaseOptions(
             },
           },
         },
+        datalabels,
+        annotation: {
+          annotations,
+        },
       },
       scales: {
         x: {
-          grid: { display: opts.showGrid ? false : false }, // x grid always off per Economist style
+          grid: { display: false }, // x grid always off per Economist style
+          ticks: {
+            maxRotation: opts.xAxisLabelRotation ?? 0,
+            minRotation: opts.xAxisLabelRotation ?? 0,
+          },
           title: opts.xAxisLabel
             ? {
                 display: true,
@@ -150,24 +245,7 @@ function buildBaseOptions(
               }
             : { display: false },
         },
-        y: {
-          grid: {
-            display: opts.showGrid,
-            color: ECONOMIST_COLORS.gridLine,
-            lineWidth: 0.8,
-          },
-          ticks: {
-            callback: yTickCallback,
-          },
-          title: opts.yAxisLabel
-            ? {
-                display: true,
-                text: opts.yAxisLabel,
-                color: ECONOMIST_COLORS.textSecondary,
-                font: { size: 11, family: ECONOMIST_FONTS.sans },
-              }
-            : { display: false },
-        },
+        y: yScale,
       },
     },
   );
@@ -219,9 +297,9 @@ export const LineChart: React.FC<ChartJSChartProps> = ({ data, options, height }
           data: values,
           borderColor: options.colorOverrides[0] ?? getColor(0),
           backgroundColor: options.colorOverrides[0] ?? getColor(0),
-          borderWidth: 2.5,
-          pointRadius: 3,
-          pointHoverRadius: 5,
+          borderWidth: options.lineWidth ?? 2.5,
+          pointRadius: options.pointSize ?? 3,
+          pointHoverRadius: (options.pointSize ?? 3) + 2,
           tension: 0.35,
           fill: false,
         },
@@ -251,9 +329,9 @@ export const MultiLineChart: React.FC<ChartJSChartProps> = ({ data, options, hei
         data: s.data,
         borderColor: s.color ?? colors[i],
         backgroundColor: s.color ?? colors[i],
-        borderWidth: 2.5,
-        pointRadius: 3,
-        pointHoverRadius: 5,
+        borderWidth: options.lineWidth ?? 2.5,
+        pointRadius: options.pointSize ?? 3,
+        pointHoverRadius: (options.pointSize ?? 3) + 2,
         tension: 0.35,
         fill: false,
       })),
@@ -283,9 +361,9 @@ export const AreaChart: React.FC<ChartJSChartProps> = ({ data, options, height }
           data: values,
           borderColor: color,
           backgroundColor: `${color}26`, // ~15% opacity
-          borderWidth: 2.5,
+          borderWidth: options.lineWidth ?? 2.5,
           pointRadius: 0,
-          pointHoverRadius: 4,
+          pointHoverRadius: (options.pointSize ?? 3) + 1,
           tension: 0.35,
           fill: true,
         },
@@ -315,9 +393,9 @@ export const StackedAreaChart: React.FC<ChartJSChartProps> = ({ data, options, h
         data: s.data,
         borderColor: s.color ?? colors[i],
         backgroundColor: `${s.color ?? colors[i]}66`, // ~40% opacity
-        borderWidth: 1.5,
+        borderWidth: options.lineWidth ? options.lineWidth * 0.6 : 1.5,
         pointRadius: 0,
-        pointHoverRadius: 3,
+        pointHoverRadius: (options.pointSize ?? 3),
         tension: 0.35,
         fill: true,
       })),
@@ -643,20 +721,15 @@ export const PieChart: React.FC<ChartJSChartProps> = ({ data, options, height })
     };
   }, [data, options]);
 
+  const fmtOpts = { decimalPlaces: options.decimalPlaces, thousandSeparator: options.thousandSeparator, currencySymbol: options.currencySymbol };
+
   const chartOptions = useMemo(
     () => ({
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
         legend: {
-          display: options.showLegend,
-          position: 'right' as const,
-          labels: {
-            color: ECONOMIST_COLORS.textPrimary,
-            font: { size: 11, family: ECONOMIST_FONTS.sans },
-            boxWidth: 12,
-            padding: 10,
-          },
+          display: false,
         },
         tooltip: {
           ...CHARTJS_ECONOMIST_DEFAULTS.plugins.tooltip,
@@ -664,13 +737,27 @@ export const PieChart: React.FC<ChartJSChartProps> = ({ data, options, height })
             label: (ctx: { label?: string; parsed?: number; dataset?: { data?: number[] } }) => {
               const total = (ctx.dataset?.data ?? []).reduce((a: number, b: number) => a + b, 0);
               const pct = total > 0 ? ((ctx.parsed ?? 0) / total * 100).toFixed(1) : '0';
-              return `${ctx.label}: ${formatTick(ctx.parsed ?? 0, options.yAxisFormat)} (${pct}%)`;
+              return `${ctx.label}: ${formatTick(ctx.parsed ?? 0, options.yAxisFormat, fmtOpts)} (${pct}%)`;
             },
           },
         },
+        datalabels: options.showDataLabels
+          ? {
+              display: true,
+              color: '#fff',
+              font: { size: 11, family: ECONOMIST_FONTS.sans, weight: 600 as const },
+              formatter: (_value: number, ctx: unknown) => {
+                const c = ctx as { dataset: { data: number[] } };
+                const total = c.dataset.data.reduce((a: number, b: number) => a + b, 0);
+                const pct = total > 0 ? ((_value / total) * 100).toFixed(1) : '0';
+                return `${pct}%`;
+              },
+            }
+          : { display: false },
+        annotation: { annotations: {} },
       },
     }),
-    [options],
+    [options, fmtOpts],
   );
 
   return <Pie data={chartData} options={chartOptions} height={height ?? options.height} />;
@@ -698,6 +785,8 @@ export const DonutChart: React.FC<ChartJSChartProps> = ({ data, options, height 
     };
   }, [data, options]);
 
+  const fmtOpts = { decimalPlaces: options.decimalPlaces, thousandSeparator: options.thousandSeparator, currencySymbol: options.currencySymbol };
+
   const chartOptions = useMemo(
     () => ({
       responsive: true,
@@ -705,14 +794,7 @@ export const DonutChart: React.FC<ChartJSChartProps> = ({ data, options, height 
       cutout: '55%',
       plugins: {
         legend: {
-          display: options.showLegend,
-          position: 'right' as const,
-          labels: {
-            color: ECONOMIST_COLORS.textPrimary,
-            font: { size: 11, family: ECONOMIST_FONTS.sans },
-            boxWidth: 12,
-            padding: 10,
-          },
+          display: false,
         },
         tooltip: {
           ...CHARTJS_ECONOMIST_DEFAULTS.plugins.tooltip,
@@ -720,13 +802,27 @@ export const DonutChart: React.FC<ChartJSChartProps> = ({ data, options, height 
             label: (ctx: { label?: string; parsed?: number; dataset?: { data?: number[] } }) => {
               const total = (ctx.dataset?.data ?? []).reduce((a: number, b: number) => a + b, 0);
               const pct = total > 0 ? ((ctx.parsed ?? 0) / total * 100).toFixed(1) : '0';
-              return `${ctx.label}: ${formatTick(ctx.parsed ?? 0, options.yAxisFormat)} (${pct}%)`;
+              return `${ctx.label}: ${formatTick(ctx.parsed ?? 0, options.yAxisFormat, fmtOpts)} (${pct}%)`;
             },
           },
         },
+        datalabels: options.showDataLabels
+          ? {
+              display: true,
+              color: '#fff',
+              font: { size: 11, family: ECONOMIST_FONTS.sans, weight: 600 as const },
+              formatter: (_value: number, ctx: unknown) => {
+                const c = ctx as { dataset: { data: number[] } };
+                const total = c.dataset.data.reduce((a: number, b: number) => a + b, 0);
+                const pct = total > 0 ? ((_value / total) * 100).toFixed(1) : '0';
+                return `${pct}%`;
+              },
+            }
+          : { display: false },
+        annotation: { annotations: {} },
       },
     }),
-    [options],
+    [options, fmtOpts],
   );
 
   return <Doughnut data={chartData} options={chartOptions} height={height ?? options.height} />;
@@ -776,23 +872,21 @@ export const RadarChart: React.FC<ChartJSChartProps> = ({ data, options, height 
     };
   }, [data, options]);
 
+  const fmtOpts = { decimalPlaces: options.decimalPlaces, thousandSeparator: options.thousandSeparator, currencySymbol: options.currencySymbol };
+
   const chartOptions = useMemo(
     () => ({
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
         legend: {
-          display: options.showLegend,
-          labels: {
-            color: ECONOMIST_COLORS.textPrimary,
-            font: { size: 11, family: ECONOMIST_FONTS.sans },
-            boxWidth: 12,
-            padding: 12,
-          },
+          display: false,
         },
         tooltip: {
           ...CHARTJS_ECONOMIST_DEFAULTS.plugins.tooltip,
         },
+        datalabels: { display: false },
+        annotation: { annotations: {} },
       },
       scales: {
         r: {
@@ -806,12 +900,12 @@ export const RadarChart: React.FC<ChartJSChartProps> = ({ data, options, height 
             color: ECONOMIST_COLORS.axis,
             font: { size: 10, family: ECONOMIST_FONTS.sans },
             backdropColor: 'transparent',
-            callback: (value: number | string) => formatTick(value, options.yAxisFormat),
+            callback: (value: number | string) => formatTick(value, options.yAxisFormat, fmtOpts),
           },
         },
       },
     }),
-    [options],
+    [options, fmtOpts],
   );
 
   return <Radar data={chartData} options={chartOptions} height={height ?? options.height} />;
