@@ -2,7 +2,7 @@ import React, { useRef, useState, useCallback } from 'react';
 import Papa from 'papaparse';
 import type { ChartTypeId, ChartData, DataShape } from '../../types/chart';
 import { CHART_CATALOGUE } from '../../types/catalogue';
-import { getSampleData } from '../../utils/sampleData';
+import { getSampleData, getAlternateSampleData } from '../../utils/sampleData';
 import { smartParse, validateData, detectFormat } from '../../utils/dataTransform';
 
 interface DataEditorProps {
@@ -50,7 +50,7 @@ export default function DataEditor({ chartTypeId, data, onChange, onLoadSample }
   const dataShape = meta?.dataShape ?? 'single-series';
 
   const [rawText, setRawText] = useState('');
-  const [editMode, setEditMode] = useState<'json' | 'paste'>('json');
+  const [editMode, setEditMode] = useState<'json' | 'paste'>('paste');
   const [feedback, setFeedback] = useState<{ type: 'success' | 'error' | 'warning'; message: string } | null>(null);
 
   const jsonText = JSON.stringify(data, null, 2);
@@ -143,9 +143,9 @@ export default function DataEditor({ chartTypeId, data, onChange, onLoadSample }
     if (onLoadSample) {
       onLoadSample();
     } else {
-      onChange(getSampleData(chartTypeId));
+      onChange(getAlternateSampleData(chartTypeId));
     }
-    setFeedback({ type: 'success', message: 'Sample data loaded' });
+    setFeedback({ type: 'success', message: 'Sample data changed' });
   };
 
   return (
@@ -155,26 +155,53 @@ export default function DataEditor({ chartTypeId, data, onChange, onLoadSample }
       {/* Mode tabs */}
       <div style={s.tabRow}>
         <button
-          style={editMode === 'json' ? s.tabActive : s.tab}
-          onClick={() => setEditMode('json')}
-        >
-          JSON editor
-        </button>
-        <button
           style={editMode === 'paste' ? s.tabActive : s.tab}
           onClick={() => setEditMode('paste')}
         >
           Paste data
         </button>
+        <button
+          style={editMode === 'json' ? s.tabActive : s.tab}
+          onClick={() => setEditMode('json')}
+        >
+          Edit JSON
+        </button>
       </div>
 
-      {editMode === 'json' ? (
+      {editMode === 'paste' ? (
         <>
-          {/* Shape hint */}
+          {/* Paste mode — friendly, default view */}
+          <div style={s.pasteInstructions}>
+            <p style={s.pasteTitle}>Paste from Excel, Sheets, or anywhere</p>
+            <p style={s.pasteDesc}>
+              Copy a table from a spreadsheet and paste below. We'll auto-detect columns and format.
+            </p>
+            {SHAPE_EXAMPLES[dataShape] && (
+              <pre style={s.pasteExample}>{SHAPE_EXAMPLES[dataShape]}</pre>
+            )}
+          </div>
+
+          <textarea
+            style={s.textarea}
+            value={rawText}
+            onChange={(e) => setRawText(e.target.value)}
+            onPaste={handlePasteEvent}
+            placeholder="Paste your data here..."
+            spellCheck={false}
+          />
+
+          {rawText.trim() && (
+            <button style={s.buttonPrimary} onClick={handleSmartPaste}>
+              Convert to chart data
+            </button>
+          )}
+        </>
+      ) : (
+        <>
+          {/* JSON editor — power user view */}
           <p style={s.label}>Expected shape ({dataShape})</p>
           <pre style={s.hint}>{DATA_SHAPE_HINTS[dataShape]}</pre>
 
-          {/* JSON textarea */}
           <textarea
             style={{
               ...s.textarea,
@@ -185,7 +212,6 @@ export default function DataEditor({ chartTypeId, data, onChange, onLoadSample }
             spellCheck={false}
           />
 
-          {/* Validation status */}
           {!currentValidation.valid && currentValidation.errors.length > 0 && (
             <div style={s.errorBox}>
               {currentValidation.errors.map((err, i) => (
@@ -201,35 +227,6 @@ export default function DataEditor({ chartTypeId, data, onChange, onLoadSample }
             </div>
           )}
         </>
-      ) : (
-        <>
-          {/* Paste mode instructions */}
-          <div style={s.pasteInstructions}>
-            <p style={s.pasteTitle}>Paste from anywhere</p>
-            <p style={s.pasteDesc}>
-              Paste CSV, tab-separated data (Excel/Google Sheets), JSON arrays,
-              or a column of numbers. We'll auto-detect and convert.
-            </p>
-            {SHAPE_EXAMPLES[dataShape] && (
-              <pre style={s.pasteExample}>{SHAPE_EXAMPLES[dataShape]}</pre>
-            )}
-          </div>
-
-          <textarea
-            style={s.textarea}
-            value={rawText}
-            onChange={(e) => setRawText(e.target.value)}
-            onPaste={handlePasteEvent}
-            placeholder="Paste your data here — CSV, TSV, JSON, or numbers..."
-            spellCheck={false}
-          />
-
-          {rawText.trim() && (
-            <button style={s.buttonPrimary} onClick={handleSmartPaste}>
-              Convert to chart data
-            </button>
-          )}
-        </>
       )}
 
       {/* Feedback message */}
@@ -243,8 +240,8 @@ export default function DataEditor({ chartTypeId, data, onChange, onLoadSample }
 
       {/* Action buttons */}
       <div style={s.buttonRow}>
-        <button style={s.buttonPrimary} onClick={handleLoadSample}>
-          Use sample data
+        <button style={s.button} onClick={handleLoadSample}>
+          Change sample data
         </button>
         <button
           style={s.button}

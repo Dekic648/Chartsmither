@@ -9,7 +9,7 @@ import ChartWrapper from '../components/layout/ChartWrapper';
 import DataEditor from '../components/data-input/DataEditor';
 import OptionsPanel from '../components/data-input/OptionsPanel';
 import ExportBar from '../components/export/ExportBar';
-import { getSampleData } from '../utils/sampleData';
+import { getSampleData, getAlternateSampleData } from '../utils/sampleData';
 import { getColors } from '../theme/economist';
 import { CHARTJS_RENDERERS } from '../charts/chartjs';
 import { SVG_RENDERERS } from '../charts/svg';
@@ -128,9 +128,8 @@ const EditorPage: React.FC = () => {
 
   const handleLoadSample = () => {
     if (!typeId || !meta) return;
-    // Clear saved state so we get a true reset
     try { localStorage.removeItem(`chartcraft:${typeId}`); } catch {}
-    const sample = getSampleData(typeId as ChartTypeId);
+    const sample = getAlternateSampleData(typeId as ChartTypeId);
     setData(sample);
     setOptions({
       ...DEFAULT_OPTIONS,

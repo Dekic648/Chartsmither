@@ -724,3 +724,135 @@ export function getSampleData(chartTypeId: ChartTypeId): ChartData {
   // Return a deep copy so callers can mutate freely
   return JSON.parse(JSON.stringify(data));
 }
+
+// ── Alternate sample datasets for cycling ─────────────────────────────
+
+const altSampleSets: Partial<Record<ChartTypeId, ChartData[]>> = {
+  line: [
+    { labels: ['Q1', 'Q2', 'Q3', 'Q4'], series: [{ name: 'Revenue, $m', data: [12.4, 14.1, 13.8, 16.2] }] },
+    { labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'], series: [{ name: 'Active users, thousands', data: [340, 365, 410, 385, 420, 460] }] },
+  ],
+  'multi-line': [
+    { labels: ['2020', '2021', '2022', '2023', '2024'], series: [
+      { name: 'SaaS', data: [45, 62, 78, 95, 118] },
+      { name: 'On-prem', data: [120, 110, 95, 82, 68] },
+      { name: 'Hybrid', data: [15, 28, 42, 58, 74] },
+    ] },
+    { labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'], series: [
+      { name: 'Team A', data: [8.2, 7.5, 9.1, 8.8, 6.3] },
+      { name: 'Team B', data: [6.1, 7.8, 7.2, 8.5, 7.0] },
+    ] },
+  ],
+  bar: [
+    { labels: ['Product A', 'Product B', 'Product C', 'Product D'], series: [{ name: 'Revenue, $m', data: [48.2, 35.7, 28.1, 19.4] }] },
+    { labels: ['Marketing', 'Engineering', 'Sales', 'Operations', 'Support'], series: [{ name: 'Headcount', data: [45, 120, 68, 32, 24] }] },
+  ],
+  'grouped-bar': [
+    { labels: ['North', 'South', 'East', 'West'], series: [
+      { name: 'Actual', data: [34, 28, 42, 31] },
+      { name: 'Target', data: [30, 35, 40, 38] },
+    ] },
+  ],
+  'stacked-bar': [
+    { labels: ['2022', '2023', '2024'], series: [
+      { name: 'Organic', data: [42, 48, 55] },
+      { name: 'Paid', data: [28, 35, 40] },
+      { name: 'Referral', data: [15, 18, 22] },
+    ] },
+  ],
+  area: [
+    { labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'], series: [{ name: 'MRR, $k', data: [120, 135, 142, 158, 170, 195] }] },
+  ],
+  'stacked-area': [
+    { labels: ['2020', '2021', '2022', '2023', '2024'], series: [
+      { name: 'Mobile', data: [35, 42, 48, 55, 62] },
+      { name: 'Desktop', data: [55, 48, 42, 38, 32] },
+      { name: 'Tablet', data: [10, 10, 10, 7, 6] },
+    ] },
+  ],
+  pie: [
+    { items: [{ label: 'Enterprise', value: 45 }, { label: 'Mid-market', value: 30 }, { label: 'SMB', value: 18 }, { label: 'Consumer', value: 7 }] },
+    { items: [{ label: 'Satisfied', value: 62 }, { label: 'Neutral', value: 24 }, { label: 'Dissatisfied', value: 14 }] },
+  ],
+  donut: [
+    { items: [{ label: 'Completed', value: 73 }, { label: 'In Progress', value: 18 }, { label: 'Not Started', value: 9 }] },
+    { items: [{ label: 'Direct', value: 38 }, { label: 'Organic', value: 32 }, { label: 'Social', value: 18 }, { label: 'Referral', value: 12 }] },
+  ],
+  scatter: [
+    { points: [
+      { x: 85, y: 92, label: 'Product A' }, { x: 72, y: 78, label: 'Product B' },
+      { x: 60, y: 85, label: 'Product C' }, { x: 45, y: 62, label: 'Product D' },
+      { x: 90, y: 88, label: 'Product E' }, { x: 55, y: 70, label: 'Product F' },
+      { x: 38, y: 55, label: 'Product G' }, { x: 78, y: 80, label: 'Product H' },
+    ] },
+  ],
+  waterfall: [
+    { items: [
+      { label: 'Base EBITDA', value: 12.5, type: 'total' },
+      { label: 'Volume growth', value: 2.8, type: 'increase' },
+      { label: 'Pricing', value: 1.4, type: 'increase' },
+      { label: 'Raw materials', value: -1.8, type: 'decrease' },
+      { label: 'Labour', value: -0.9, type: 'decrease' },
+      { label: 'Synergies', value: 1.2, type: 'increase' },
+      { label: 'Pro forma EBITDA', value: 15.2, type: 'total' },
+    ] },
+  ],
+  lollipop: [
+    { items: [
+      { label: 'Customer satisfaction', value: 87 }, { label: 'Employee NPS', value: 72 },
+      { label: 'On-time delivery', value: 94 }, { label: 'First-call resolution', value: 68 },
+      { label: 'Quality score', value: 91 }, { label: 'Cost efficiency', value: 78 },
+    ] },
+  ],
+  'diverging-bar': [
+    { items: [
+      { label: 'Strategy', left: 82, right: 45 }, { label: 'Operations', left: 65, right: 70 },
+      { label: 'Finance', left: 58, right: 62 }, { label: 'Technology', left: 40, right: 88 },
+      { label: 'People', left: 75, right: 55 },
+    ] },
+  ],
+  heatmap: [
+    { matrix: {
+      rows: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+      cols: ['9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm'],
+      values: [
+        [2, 5, 8, 6, 3, 7, 9, 4],
+        [3, 7, 9, 5, 2, 8, 7, 3],
+        [5, 8, 10, 7, 4, 6, 8, 5],
+        [4, 6, 8, 8, 5, 9, 10, 6],
+        [1, 4, 6, 5, 3, 5, 6, 2],
+      ],
+    } },
+  ],
+  treemap: [
+    { items: [
+      { label: 'Americas', value: 42 }, { label: 'EMEA', value: 35 },
+      { label: 'APAC', value: 18 }, { label: 'LATAM', value: 5 },
+    ] },
+  ],
+  radar: [
+    { labels: ['Speed', 'Reliability', 'Cost', 'Support', 'Features', 'Security'], series: [
+      { name: 'Our product', data: [85, 90, 70, 80, 95, 88] },
+      { name: 'Competitor', data: [78, 72, 85, 65, 80, 75] },
+    ] },
+  ],
+};
+
+/**
+ * Get an alternate sample dataset for a chart type.
+ * Returns a different dataset each time (cycling through available alternatives).
+ */
+let sampleCounter = 0;
+export function getAlternateSampleData(chartTypeId: ChartTypeId): ChartData {
+  const alts = altSampleSets[chartTypeId];
+  if (!alts || alts.length === 0) {
+    // Fallback: return the primary sample data (always works)
+    return getSampleData(chartTypeId);
+  }
+  const idx = sampleCounter % (alts.length + 1); // +1 to include original
+  sampleCounter++;
+  if (idx === 0) {
+    return getSampleData(chartTypeId);
+  }
+  return JSON.parse(JSON.stringify(alts[idx - 1]));
+}
