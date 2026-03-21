@@ -64,7 +64,7 @@ export const CHARTJS_ECONOMIST_DEFAULTS = {
       borderColor: '#ddd',
       borderWidth: 1,
       padding: 10,
-      titleFont: { size: 12, weight: '500' as const, family: ECONOMIST_FONTS.sans },
+      titleFont: { size: 12, weight: 'bold' as const, family: ECONOMIST_FONTS.sans },
       bodyFont: { size: 12, family: ECONOMIST_FONTS.sans },
       cornerRadius: 3,
     },

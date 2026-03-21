@@ -164,7 +164,7 @@ export const HeatmapChart: React.FC<SVGChartProps> = ({
     <svg viewBox={`0 0 ${W} ${H}`} width={W} height={H} style={{ fontFamily: FONT }}>
       <g transform={`translate(0,0)`}>{renderHeader(options, W)}</g>
       <g transform={`translate(${margin.left},${margin.top})`}>
-        {rows.map((row, ri) =>
+        {rows.map((_row, ri) =>
           cols.map((_, ci) => (
             <rect
               key={`${ri}-${ci}`}
@@ -233,41 +233,6 @@ interface TreeRect {
   w: number;
   h: number;
   color: string;
-}
-
-function squarify(
-  items: { label: string; value: number; color: string }[],
-  x: number,
-  y: number,
-  w: number,
-  h: number,
-): TreeRect[] {
-  if (items.length === 0) return [];
-  if (items.length === 1) {
-    return [{ ...items[0], x, y, w, h }];
-  }
-  const total = items.reduce((s, d) => s + d.value, 0);
-  // Simple slice-and-dice: split along the longer axis
-  const sorted = [...items].sort((a, b) => b.value - a.value);
-  const rects: TreeRect[] = [];
-  let cx = x,
-    cy = y;
-
-  if (w >= h) {
-    // lay out horizontally
-    for (const item of sorted) {
-      const iw = (item.value / total) * w;
-      rects.push({ ...item, x: cx, y, w: iw, h });
-      cx += iw;
-    }
-  } else {
-    for (const item of sorted) {
-      const ih = (item.value / total) * h;
-      rects.push({ ...item, x, y: cy, w, h: ih });
-      cy += ih;
-    }
-  }
-  return rects;
 }
 
 export const TreemapChart: React.FC<SVGChartProps> = ({

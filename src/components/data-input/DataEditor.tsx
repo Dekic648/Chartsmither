@@ -82,8 +82,7 @@ export default function DataEditor({ chartTypeId, data, onChange }: DataEditorPr
 
     const result = smartParse(rawText, dataShape);
     if (result.data) {
-      const val = validateData(result.data, dataShape);
-
+      validateData(result.data, dataShape);
       onChange(result.data);
       setFeedback({ type: 'success', message: result.message });
       setEditMode('json');

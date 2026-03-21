@@ -181,27 +181,27 @@ const sampleDataMap: Record<ChartTypeId, ChartData> = {
 
   'diverging-bar': {
     items: [
-      { label: 'Economy', left: 38, right: 52 },
-      { label: 'Healthcare', left: 45, right: 42 },
-      { label: 'Immigration', left: 28, right: 61 },
-      { label: 'Climate', left: 62, right: 24 },
-      { label: 'Education', left: 48, right: 40 },
-      { label: 'Defence', left: 32, right: 55 },
-      { label: 'Taxation', left: 55, right: 35 },
+      { label: 'Economy', value: 0, left: 38, right: 52 },
+      { label: 'Healthcare', value: 0, left: 45, right: 42 },
+      { label: 'Immigration', value: 0, left: 28, right: 61 },
+      { label: 'Climate', value: 0, left: 62, right: 24 },
+      { label: 'Education', value: 0, left: 48, right: 40 },
+      { label: 'Defence', value: 0, left: 32, right: 55 },
+      { label: 'Taxation', value: 0, left: 55, right: 35 },
     ],
   },
 
   'population-pyramid': {
     items: [
-      { label: '0-9', left: 5.8, right: 5.5 },
-      { label: '10-19', left: 6.2, right: 5.9 },
-      { label: '20-29', left: 6.8, right: 6.5 },
-      { label: '30-39', left: 6.9, right: 6.7 },
-      { label: '40-49', left: 6.2, right: 6.1 },
-      { label: '50-59', left: 6.5, right: 6.6 },
-      { label: '60-69', left: 6.1, right: 6.5 },
-      { label: '70-79', left: 4.2, right: 4.9 },
-      { label: '80+', left: 2.1, right: 3.2 },
+      { label: '0-9', value: 0, left: 5.8, right: 5.5 },
+      { label: '10-19', value: 0, left: 6.2, right: 5.9 },
+      { label: '20-29', value: 0, left: 6.8, right: 6.5 },
+      { label: '30-39', value: 0, left: 6.9, right: 6.7 },
+      { label: '40-49', value: 0, left: 6.2, right: 6.1 },
+      { label: '50-59', value: 0, left: 6.5, right: 6.6 },
+      { label: '60-69', value: 0, left: 6.1, right: 6.5 },
+      { label: '70-79', value: 0, left: 4.2, right: 4.9 },
+      { label: '80+', value: 0, left: 2.1, right: 3.2 },
     ],
   },
 

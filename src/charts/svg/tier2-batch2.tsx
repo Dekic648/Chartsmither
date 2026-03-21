@@ -134,7 +134,7 @@ export const NetworkDiagramChart: React.FC<SVGChartProps> = ({
   const radii = items.map((d) => minR + ((d.value / maxVal) * (maxR - minR)));
 
   // Simple force-directed layout (spring-based, 50 iterations)
-  const positions = items.map((_, i) => ({
+  const positions = items.map(() => ({
     x: plotW * 0.15 + Math.random() * plotW * 0.7,
     y: plotH * 0.15 + Math.random() * plotH * 0.7,
     vx: 0,

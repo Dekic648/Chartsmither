@@ -43,12 +43,6 @@ function lerpColor(a: string, b: string, t: number): string {
 // Header / footer shared across all map charts
 // ---------------------------------------------------------------------------
 
-interface HeaderFooterProps {
-  title: string;
-  subtitle: string;
-  source: string;
-}
-
 function ChartHeader({ title, subtitle }: { title: string; subtitle: string }) {
   return (
     <g>

@@ -556,7 +556,7 @@ export const ScatterChart: React.FC<ChartJSChartProps> = ({ data, options, heigh
           showLine: true,
           fill: false,
           type: 'line' as const,
-        } as (typeof datasets)[number]);
+        } as unknown as (typeof datasets)[number]);
       }
     }
 
