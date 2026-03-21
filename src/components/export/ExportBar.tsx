@@ -26,17 +26,34 @@ const btnStyle: React.CSSProperties = {
 
 const ExportBar: React.FC<ExportBarProps> = ({ chartRef, title }) => {
   const [copied, setCopied] = useState(false);
+  const [status, setStatus] = useState<string | null>(null);
 
   const slug = (title || 'chart').toLowerCase().replace(/[^a-z0-9]+/g, '-');
 
   const handlePng = async () => {
     if (!chartRef.current) return;
-    await exportPng(chartRef.current, `${slug}.png`);
+    try {
+      setStatus('Exporting PNG...');
+      await exportPng(chartRef.current, `${slug}.png`);
+      setStatus(null);
+    } catch (err) {
+      console.error('PNG export failed:', err);
+      setStatus('PNG export failed — try HTML instead');
+      setTimeout(() => setStatus(null), 3000);
+    }
   };
 
   const handleSvg = async () => {
     if (!chartRef.current) return;
-    await exportSvg(chartRef.current, `${slug}.svg`);
+    try {
+      setStatus('Exporting SVG...');
+      await exportSvg(chartRef.current, `${slug}.svg`);
+      setStatus(null);
+    } catch (err) {
+      console.error('SVG export failed:', err);
+      setStatus('SVG export failed — try HTML instead');
+      setTimeout(() => setStatus(null), 3000);
+    }
   };
 
   const handleHtml = () => {
@@ -44,11 +61,17 @@ const ExportBar: React.FC<ExportBarProps> = ({ chartRef, title }) => {
     exportHtml(chartRef.current, `${slug}.html`);
   };
 
-  const handleCopy = () => {
+  const handleCopy = async () => {
     if (!chartRef.current) return;
-    copyEmbedCode(chartRef.current);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    try {
+      await copyEmbedCode(chartRef.current);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Copy failed:', err);
+      setStatus('Copy failed — check browser permissions');
+      setTimeout(() => setStatus(null), 3000);
+    }
   };
 
   return (
@@ -65,6 +88,11 @@ const ExportBar: React.FC<ExportBarProps> = ({ chartRef, title }) => {
       <button style={btnStyle} onClick={handleCopy}>
         <Copy size={14} /> {copied ? 'Copied!' : 'Embed code'}
       </button>
+      {status && (
+        <p style={{ fontSize: 12, color: status.includes('failed') ? '#B91C1C' : '#7A7468', margin: '4px 0 0' }}>
+          {status}
+        </p>
+      )}
     </div>
   );
 };
