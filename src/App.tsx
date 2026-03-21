@@ -1,0 +1,23 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import AppShell from './components/layout/AppShell';
+import CataloguePage from './pages/CataloguePage';
+import TemplatesPage from './pages/TemplatesPage';
+import EditorPage from './pages/EditorPage';
+import DashboardPage from './pages/DashboardPage';
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AppShell>
+        <Routes>
+          <Route path="/" element={<CataloguePage />} />
+          <Route path="/templates" element={<TemplatesPage />} />
+          <Route path="/edit/:typeId" element={<EditorPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
+        </Routes>
+      </AppShell>
+    </BrowserRouter>
+  );
+}
+
+export default App;

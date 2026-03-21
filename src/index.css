@@ -1,0 +1,321 @@
+/* ============================================================
+   ChartCraft — Global Styles (Economist Editorial Theme)
+   ============================================================ */
+
+:root {
+  /* ---- Palette (warm cream editorial) ---- */
+  --cc-red: #E3120B;
+  --cc-red-dark: #B80E09;
+  --cc-red-soft: rgba(227, 18, 11, 0.06);
+  --cc-bg: #FDF8F0;
+  --cc-bg-warm: #FAF4EA;
+  --cc-card: #FFFFFF;
+  --cc-card-border: #E8E0D4;
+  --cc-text: #2D2A26;
+  --cc-text-secondary: #5C574F;
+  --cc-text-muted: #9B9488;
+  --cc-heading: #1A1714;
+  --cc-border: #DDD6CA;
+  --cc-shadow: rgba(60, 45, 20, 0.06) 0 2px 12px, rgba(60, 45, 20, 0.03) 0 1px 4px;
+
+  /* ---- Typography ---- */
+  --cc-font: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --cc-mono: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace;
+
+  /* ---- Spacing ---- */
+  --cc-space-xs: 4px;
+  --cc-space-sm: 8px;
+  --cc-space-md: 16px;
+  --cc-space-lg: 24px;
+  --cc-space-xl: 32px;
+  --cc-space-2xl: 48px;
+
+  /* ---- Layout ---- */
+  --cc-max-width: 1120px;
+  --cc-radius: 4px;
+  --cc-nav-height: 56px;
+
+  color-scheme: light;
+}
+
+/* Dark mode disabled — warm cream only */
+
+/* ============================================================
+   Reset & Base
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--cc-font);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--cc-text);
+  background-color: var(--cc-bg);
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================================
+   Typography
+   ============================================================ */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--cc-font);
+  font-weight: 700;
+  color: var(--cc-heading);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+h1 { font-size: 2rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.25rem; }
+h4 { font-size: 1.125rem; }
+
+p {
+  margin: 0 0 var(--cc-space-md);
+  color: var(--cc-text-secondary);
+  line-height: 1.6;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+a {
+  color: var(--cc-red);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+a:hover {
+  color: var(--cc-red-dark);
+  text-decoration: underline;
+}
+
+small {
+  font-size: 0.8125rem;
+  color: var(--cc-text-muted);
+}
+
+code {
+  font-family: var(--cc-mono);
+  font-size: 0.875em;
+  background: var(--cc-card);
+  border: 1px solid var(--cc-card-border);
+  border-radius: var(--cc-radius);
+  padding: 2px 6px;
+}
+
+/* ============================================================
+   Utility Classes
+   ============================================================ */
+
+/* Layout */
+.cc-container {
+  width: 100%;
+  max-width: var(--cc-max-width);
+  margin: 0 auto;
+  padding: 0 var(--cc-space-lg);
+}
+
+.cc-main {
+  flex: 1;
+  padding: var(--cc-space-xl) 0;
+}
+
+/* Cards */
+.cc-card {
+  background: var(--cc-card);
+  border: 1px solid var(--cc-card-border);
+  border-radius: var(--cc-radius);
+  box-shadow: var(--cc-shadow);
+  overflow: hidden;
+}
+
+/* Flex helpers */
+.cc-flex {
+  display: flex;
+}
+
+.cc-flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cc-flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cc-gap-sm { gap: var(--cc-space-sm); }
+.cc-gap-md { gap: var(--cc-space-md); }
+.cc-gap-lg { gap: var(--cc-space-lg); }
+
+/* Grid */
+.cc-grid {
+  display: grid;
+  gap: var(--cc-space-lg);
+}
+
+.cc-grid-2 {
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+/* Spacing */
+.cc-mt-sm { margin-top: var(--cc-space-sm); }
+.cc-mt-md { margin-top: var(--cc-space-md); }
+.cc-mt-lg { margin-top: var(--cc-space-lg); }
+.cc-mt-xl { margin-top: var(--cc-space-xl); }
+
+.cc-mb-sm { margin-bottom: var(--cc-space-sm); }
+.cc-mb-md { margin-bottom: var(--cc-space-md); }
+.cc-mb-lg { margin-bottom: var(--cc-space-lg); }
+
+.cc-p-md { padding: var(--cc-space-md); }
+.cc-p-lg { padding: var(--cc-space-lg); }
+
+/* Text */
+.cc-text-muted { color: var(--cc-text-muted); }
+.cc-text-secondary { color: var(--cc-text-secondary); }
+.cc-text-small { font-size: 0.8125rem; }
+.cc-text-center { text-align: center; }
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+
+.cc-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--cc-space-sm);
+  font-family: var(--cc-font);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: 10px 20px;
+  border: 1px solid transparent;
+  border-radius: var(--cc-radius);
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
+}
+
+.cc-btn-primary {
+  background: var(--cc-red);
+  color: #ffffff;
+  border-color: var(--cc-red);
+}
+
+.cc-btn-primary:hover {
+  background: var(--cc-red-dark);
+  border-color: var(--cc-red-dark);
+}
+
+.cc-btn-secondary {
+  background: var(--cc-card);
+  color: var(--cc-text);
+  border-color: var(--cc-border);
+}
+
+.cc-btn-secondary:hover {
+  background: var(--cc-bg);
+  border-color: var(--cc-text-muted);
+}
+
+/* ============================================================
+   Scrollbar (subtle)
+   ============================================================ */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--cc-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--cc-text-muted);
+}
+
+/* ============================================================
+   Selection
+   ============================================================ */
+
+::selection {
+  background: var(--cc-red);
+  color: #ffffff;
+}
+
+/* ============================================================
+   Layout classes (used by pages)
+   ============================================================ */
+
+.cc-catalogue-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(195px, 1fr));
+  gap: 12px;
+}
+
+.cc-editor-grid {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 24px;
+  align-items: start;
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+
+@media (max-width: 768px) {
+  .cc-container {
+    padding: 0 var(--cc-space-md);
+  }
+
+  .cc-main {
+    padding: var(--cc-space-lg) 0;
+  }
+
+  h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.25rem; }
+}
+
+@media (max-width: 900px) {
+  .cc-editor-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cc-catalogue-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+}

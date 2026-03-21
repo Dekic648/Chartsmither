@@ -1,0 +1,149 @@
+export type ChartCategory =
+  | 'line'
+  | 'bar'
+  | 'horizontal'
+  | 'scatter'
+  | 'part-to-whole'
+  | 'distribution'
+  | 'ranking'
+  | 'flow'
+  | 'map'
+  | 'other';
+
+export type ChartTypeId =
+  // Chart.js based
+  | 'line'
+  | 'multi-line'
+  | 'area'
+  | 'stacked-area'
+  | 'bar'
+  | 'grouped-bar'
+  | 'stacked-bar'
+  | 'histogram'
+  | 'scatter'
+  | 'bubble'
+  | 'pie'
+  | 'donut'
+  | 'radar'
+  // Custom SVG
+  | 'heatmap'
+  | 'treemap'
+  | 'lollipop'
+  | 'diverging-bar'
+  | 'population-pyramid'
+  | 'bullet-graph'
+  | 'box-plot'
+  | 'violin-plot'
+  | 'dot-matrix'
+  | 'span-chart'
+  | 'waterfall'
+  | 'radial-bar'
+  | 'nightingale-rose'
+  | 'proportional-area'
+  | 'pictogram'
+  | 'word-cloud'
+  // Tier 2 — batch 1
+  | 'sankey'
+  | 'chord'
+  | 'sunburst'
+  | 'circle-packing'
+  | 'tree-diagram'
+  // Tier 2 — batch 2
+  | 'network-diagram'
+  | 'parallel-coordinates'
+  | 'stream-graph'
+  | 'arc-diagram'
+  | 'marimekko'
+  // Tier 2 — batch 3
+  | 'venn-diagram'
+  | 'density-plot'
+  | 'gantt'
+  | 'timeline'
+  | 'error-bars'
+  // Maps
+  | 'choropleth-map'
+  | 'bubble-map'
+  | 'dot-map'
+  | 'connection-map'
+  | 'flow-map';
+
+export interface ChartTypeMeta {
+  id: ChartTypeId;
+  name: string;
+  description: string;
+  category: ChartCategory;
+  engine: 'chartjs' | 'svg';
+  dataShape: DataShape;
+  icon: string; // SVG path or emoji fallback
+}
+
+export type DataShape =
+  | 'single-series'      // one array of values + labels
+  | 'multi-series'       // multiple named arrays + shared labels
+  | 'xy'                 // array of {x, y} points
+  | 'xyz'                // array of {x, y, z} points
+  | 'matrix'             // 2D grid of values
+  | 'hierarchical'       // nested { name, value, children }
+  | 'key-value'          // { label: string, value: number }[]
+  | 'range'              // { label, min, max }[]
+  | 'distribution'       // raw number array for stats
+  | 'weighted-text'      // { text, weight }[]
+  | 'pyramid'            // { label, left, right }[]
+  | 'bullet'             // { label, value, target, ranges }[]
+  | 'waterfall'          // { label, value, type: 'increase' | 'decrease' | 'total' }[]
+  | 'flow'               // { source, target, value }[]
+  | 'network'            // { label, value, connections }[]
+  | 'gantt'              // { label, start, end, category? }[]
+  | 'timeline-events'    // { label, value (year), description? }[]
+  | 'error'              // { label, value, error }[]
+  | 'venn'               // { label, value }[] with overlap
+  | 'geo';               // { label (country code), value }[]
+
+export interface DataSeries {
+  name: string;
+  data: number[];
+  color?: string;
+}
+
+export interface ChartData {
+  labels?: string[];
+  series?: DataSeries[];
+  points?: { x: number; y: number; z?: number; label?: string }[];
+  matrix?: { rows: string[]; cols: string[]; values: number[][] };
+  items?: { label: string; value: number; [key: string]: unknown }[];
+  raw?: number[];
+}
+
+export interface ChartConfig {
+  type: ChartTypeId;
+  data: ChartData;
+  options: ChartOptions;
+}
+
+export interface ChartOptions {
+  title: string;
+  subtitle: string;
+  source: string;
+  width: number;
+  height: number;
+  showLegend: boolean;
+  showGrid: boolean;
+  yAxisLabel: string;
+  xAxisLabel: string;
+  yAxisFormat: 'number' | 'percent' | 'currency' | 'compact';
+  colorOverrides: string[];
+}
+
+export const DEFAULT_OPTIONS: ChartOptions = {
+  title: '',
+  subtitle: '',
+  source: '',
+  width: 620,
+  height: 380,
+  showLegend: true,
+  showGrid: true,
+  yAxisLabel: '',
+  xAxisLabel: '',
+  yAxisFormat: 'number',
+  colorOverrides: [],
+};
