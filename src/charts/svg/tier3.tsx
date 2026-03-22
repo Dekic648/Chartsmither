@@ -217,7 +217,7 @@ export const BumpChart: React.FC<SVGChartProps> = ({ data, options, width: W = o
   const maxRank = Math.max(...series.flatMap((s) => s.data));
   const colors = getColors(series.length);
   const xStep = plotW / (labels.length - 1);
-  const yScale = (rank: number) => ((rank - 1) / (maxRank - 1)) * plotH;
+  const yScale = (rank: number) => ((rank - 1) / Math.max(maxRank - 1, 1)) * plotH;
 
   return (
     <svg viewBox={`0 0 ${W} ${H}`} width={W} height={H} style={{ fontFamily: FONT }}>
@@ -269,7 +269,7 @@ export const SmallMultiplesChart: React.FC<SVGChartProps> = ({ data, options, wi
   const cellW = W / cols;
   const cellH = H / rows;
   const pad = 8;
-  const maxVal = Math.max(...series.flatMap((s) => s.data));
+  const maxVal = Math.max(...series.flatMap((s) => s.data)) || 1;
   const colors = getColors(series.length);
 
   return (
