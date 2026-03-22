@@ -5,6 +5,7 @@ import { CHART_CATALOGUE } from '../types/catalogue';
 import type { ChartData, ChartOptions, ChartTypeId } from '../types/chart';
 import { DEFAULT_OPTIONS } from '../types/chart';
 import { ECONOMIST_COLORS } from '../theme/economist';
+import { getBrandTheme } from '../theme/brands';
 import ChartWrapper from '../components/layout/ChartWrapper';
 import DataEditor from '../components/data-input/DataEditor';
 import OptionsPanel from '../components/data-input/OptionsPanel';
@@ -150,10 +151,13 @@ const EditorPage: React.FC = () => {
     );
   }
 
+  // Resolve theme
+  const resolvedTheme = getBrandTheme(options.brandTheme ?? 'economist');
+
   // Build legend items from series data
   const legendItems = data.series?.map((s, i) => ({
     label: s.name,
-    color: s.color || getColors(data.series!.length)[i],
+    color: s.color || (options.colorOverrides?.[i]) || getColors(data.series!.length)[i],
   })) || [];
 
   // Get the right renderer
@@ -280,6 +284,7 @@ const EditorPage: React.FC = () => {
               titleFontSize={options.titleFontSize}
               subtitleFontSize={options.subtitleFontSize}
               width={options.width}
+              theme={resolvedTheme}
             >
               <div style={{ position: 'relative', height: options.height - 100 }}>
                 {Renderer ? (

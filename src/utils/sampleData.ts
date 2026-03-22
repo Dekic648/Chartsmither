@@ -836,6 +836,319 @@ const altSampleSets: Partial<Record<ChartTypeId, ChartData[]>> = {
       { name: 'Competitor', data: [78, 72, 85, 65, 80, 75] },
     ] },
   ],
+
+  // ── Missing chart types ──────────────────────────
+  histogram: [
+    { raw: [45, 48, 50, 52, 53, 55, 56, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 70, 72, 74, 76, 78, 80, 82, 85, 88, 92, 95, 100] },
+  ],
+  bubble: [
+    { points: [
+      { x: 4.2, y: 28, z: 120, label: 'Company A' }, { x: 3.1, y: 35, z: 85, label: 'Company B' },
+      { x: 5.8, y: 22, z: 200, label: 'Company C' }, { x: 2.5, y: 42, z: 65, label: 'Company D' },
+      { x: 6.2, y: 18, z: 150, label: 'Company E' }, { x: 4.8, y: 31, z: 95, label: 'Company F' },
+      { x: 1.9, y: 45, z: 40, label: 'Company G' }, { x: 7.1, y: 15, z: 180, label: 'Company H' },
+    ] },
+  ],
+  'population-pyramid': [
+    { items: [
+      { label: '0-14', value: 0, left: 8.5, right: 8.1 },
+      { label: '15-24', value: 0, left: 7.2, right: 6.8 },
+      { label: '25-34', value: 0, left: 8.8, right: 8.5 },
+      { label: '35-44', value: 0, left: 7.5, right: 7.2 },
+      { label: '45-54', value: 0, left: 6.1, right: 5.9 },
+      { label: '55-64', value: 0, left: 5.4, right: 5.8 },
+      { label: '65+', value: 0, left: 4.2, right: 5.5 },
+    ] },
+  ],
+  'box-plot': [
+    { raw: [15, 18, 20, 22, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 38, 40, 42, 45, 48, 52, 58, 65] },
+  ],
+  'violin-plot': [
+    { raw: [10, 12, 14, 15, 16, 17, 18, 18, 19, 19, 20, 20, 20, 21, 21, 21, 22, 22, 23, 24, 25, 26, 28, 30, 33, 36, 40] },
+  ],
+  'bullet-graph': [
+    { items: [
+      { label: 'Sales', value: 82, target: 90, ranges: [50, 70, 100] },
+      { label: 'Margin', value: 34, target: 30, ranges: [15, 25, 40] },
+      { label: 'Satisfaction', value: 4.2, target: 4.5, ranges: [2.5, 3.5, 5.0] },
+      { label: 'Retention', value: 88, target: 85, ranges: [60, 75, 95] },
+    ] },
+  ],
+  'dot-matrix': [
+    { items: [
+      { label: 'Agree', value: 55 },
+      { label: 'Neutral', value: 25 },
+      { label: 'Disagree', value: 20 },
+    ] },
+  ],
+  'span-chart': [
+    { items: [
+      { label: 'Junior Dev', value: 0, min: 55, max: 75 },
+      { label: 'Mid Dev', value: 0, min: 75, max: 105 },
+      { label: 'Senior Dev', value: 0, min: 100, max: 145 },
+      { label: 'Lead', value: 0, min: 120, max: 170 },
+      { label: 'Staff', value: 0, min: 150, max: 210 },
+      { label: 'Principal', value: 0, min: 180, max: 260 },
+    ] },
+  ],
+  'radial-bar': [
+    { items: [
+      { label: 'Q1 Target', value: 92 },
+      { label: 'Q2 Target', value: 78 },
+      { label: 'Q3 Target', value: 85 },
+      { label: 'Q4 Target', value: 64 },
+    ] },
+  ],
+  'nightingale-rose': [
+    { items: [
+      { label: 'Sales', value: 85 }, { label: 'Marketing', value: 72 },
+      { label: 'Engineering', value: 95 }, { label: 'Support', value: 68 },
+      { label: 'HR', value: 55 }, { label: 'Finance', value: 78 },
+      { label: 'Legal', value: 42 }, { label: 'Operations', value: 88 },
+    ] },
+  ],
+  'proportional-area': [
+    { items: [
+      { label: 'Apple', value: 3000 }, { label: 'Microsoft', value: 2800 },
+      { label: 'Saudi Aramco', value: 2100 }, { label: 'Alphabet', value: 1800 },
+      { label: 'Amazon', value: 1600 },
+    ] },
+  ],
+  pictogram: [
+    { items: [
+      { label: 'Renewable', value: 28 },
+      { label: 'Nuclear', value: 10 },
+      { label: 'Fossil fuels', value: 62 },
+    ] },
+  ],
+  'word-cloud': [
+    { items: [
+      { label: 'strategy', value: 90 }, { label: 'synergies', value: 82 },
+      { label: 'EBITDA', value: 75 }, { label: 'due diligence', value: 70 },
+      { label: 'valuation', value: 68 }, { label: 'integration', value: 65 },
+      { label: 'stakeholders', value: 60 }, { label: 'pipeline', value: 55 },
+      { label: 'market share', value: 52 }, { label: 'competitive', value: 48 },
+      { label: 'organic growth', value: 45 }, { label: 'margin expansion', value: 42 },
+      { label: 'bolt-on', value: 38 }, { label: 'carve-out', value: 35 },
+      { label: 'platform', value: 32 }, { label: 'thesis', value: 30 },
+      { label: 'multiple', value: 28 }, { label: 'IRR', value: 26 },
+      { label: 'leverage', value: 24 }, { label: 'sponsor', value: 22 },
+    ] },
+  ],
+  'density-plot': [
+    { raw: [40, 42, 44, 45, 46, 47, 48, 48, 49, 49, 50, 50, 50, 51, 51, 52, 52, 53, 54, 55, 56, 58, 60, 62, 65, 68, 72, 78, 85, 95] },
+  ],
+  'error-bars': [
+    { items: [
+      { label: 'Region A', value: 125, error: 15 },
+      { label: 'Region B', value: 98, error: 12 },
+      { label: 'Region C', value: 142, error: 18 },
+      { label: 'Region D', value: 87, error: 10 },
+      { label: 'Region E', value: 115, error: 14 },
+    ] },
+  ],
+  'venn-diagram': [
+    { items: [
+      { label: 'Strategy', value: 50 },
+      { label: 'Operations', value: 45 },
+      { label: 'Technology', value: 55 },
+      { label: 'Strategy ∩ Ops', value: 18 },
+      { label: 'Strategy ∩ Tech', value: 22 },
+      { label: 'Ops ∩ Tech', value: 16 },
+      { label: 'Strategy ∩ Ops ∩ Tech', value: 10 },
+    ] },
+  ],
+  sankey: [
+    { items: [
+      { label: 'Online-Enterprise', source: 'Online', target: 'Enterprise', value: 35 },
+      { label: 'Online-SMB', source: 'Online', target: 'SMB', value: 45 },
+      { label: 'Direct-Enterprise', source: 'Direct Sales', target: 'Enterprise', value: 60 },
+      { label: 'Direct-Mid', source: 'Direct Sales', target: 'Mid-market', value: 30 },
+      { label: 'Partner-Enterprise', source: 'Partners', target: 'Enterprise', value: 20 },
+      { label: 'Partner-Mid', source: 'Partners', target: 'Mid-market', value: 25 },
+      { label: 'Partner-SMB', source: 'Partners', target: 'SMB', value: 15 },
+    ] },
+  ],
+  chord: [
+    { matrix: {
+      rows: ['Sales', 'Marketing', 'Engineering', 'Product'],
+      cols: ['Sales', 'Marketing', 'Engineering', 'Product'],
+      values: [
+        [0, 45, 20, 35],
+        [40, 0, 15, 50],
+        [25, 10, 0, 60],
+        [30, 45, 55, 0],
+      ],
+    } },
+  ],
+  sunburst: [
+    { items: [
+      { label: 'Americas', value: 45, children: [
+        { label: 'US', value: 30 }, { label: 'Canada', value: 8 }, { label: 'Brazil', value: 7 },
+      ] },
+      { label: 'EMEA', value: 35, children: [
+        { label: 'UK', value: 12 }, { label: 'Germany', value: 10 }, { label: 'France', value: 8 }, { label: 'Other EU', value: 5 },
+      ] },
+      { label: 'APAC', value: 20, children: [
+        { label: 'Japan', value: 8 }, { label: 'Australia', value: 6 }, { label: 'India', value: 6 },
+      ] },
+    ] },
+  ],
+  'circle-packing': [
+    { items: [
+      { label: 'Engineering', value: 120, children: [
+        { label: 'Backend', value: 45 }, { label: 'Frontend', value: 35 },
+        { label: 'DevOps', value: 20 }, { label: 'QA', value: 20 },
+      ] },
+      { label: 'Product', value: 60, children: [
+        { label: 'Design', value: 25 }, { label: 'Research', value: 15 },
+        { label: 'Analytics', value: 20 },
+      ] },
+      { label: 'Go-to-market', value: 80, children: [
+        { label: 'Sales', value: 35 }, { label: 'Marketing', value: 25 },
+        { label: 'Success', value: 20 },
+      ] },
+    ] },
+  ],
+  'tree-diagram': [
+    { items: [
+      { label: 'Board', value: 1, children: [
+        { label: 'Strategy', value: 1, children: [
+          { label: 'M&A', value: 1 }, { label: 'Growth', value: 1 },
+        ] },
+        { label: 'Finance', value: 1, children: [
+          { label: 'FP&A', value: 1 }, { label: 'Audit', value: 1 }, { label: 'Tax', value: 1 },
+        ] },
+        { label: 'Operations', value: 1, children: [
+          { label: 'Supply Chain', value: 1 }, { label: 'Procurement', value: 1 },
+        ] },
+      ] },
+    ] },
+  ],
+  'network-diagram': [
+    { items: [
+      { label: 'CEO', value: 100, connections: ['CFO', 'CTO', 'COO', 'CMO'] },
+      { label: 'CFO', value: 60, connections: ['CEO', 'VP Finance', 'Controller'] },
+      { label: 'CTO', value: 70, connections: ['CEO', 'VP Eng', 'Architect'] },
+      { label: 'COO', value: 65, connections: ['CEO', 'VP Ops', 'VP Supply'] },
+      { label: 'CMO', value: 55, connections: ['CEO', 'VP Marketing'] },
+      { label: 'VP Finance', value: 40, connections: ['CFO'] },
+      { label: 'Controller', value: 35, connections: ['CFO'] },
+      { label: 'VP Eng', value: 45, connections: ['CTO'] },
+      { label: 'Architect', value: 38, connections: ['CTO'] },
+      { label: 'VP Ops', value: 42, connections: ['COO'] },
+      { label: 'VP Supply', value: 38, connections: ['COO'] },
+      { label: 'VP Marketing', value: 40, connections: ['CMO'] },
+    ] },
+  ],
+  'parallel-coordinates': [
+    { matrix: {
+      rows: ['Product A', 'Product B', 'Product C', 'Product D', 'Product E', 'Product F'],
+      cols: ['Price ($)', 'Quality', 'Delivery (days)', 'NPS', 'Margin (%)'],
+      values: [
+        [120, 92, 3, 78, 42],
+        [85, 78, 5, 65, 35],
+        [150, 95, 2, 82, 48],
+        [95, 85, 4, 72, 38],
+        [200, 98, 1, 90, 55],
+        [70, 70, 7, 58, 28],
+      ],
+    } },
+  ],
+  'stream-graph': [
+    { labels: ['Q1 22', 'Q2 22', 'Q3 22', 'Q4 22', 'Q1 23', 'Q2 23', 'Q3 23', 'Q4 23'], series: [
+      { name: 'Product A', data: [20, 25, 30, 28, 32, 38, 42, 45] },
+      { name: 'Product B', data: [35, 32, 28, 25, 22, 20, 18, 15] },
+      { name: 'Product C', data: [5, 8, 12, 18, 24, 30, 35, 40] },
+      { name: 'Product D', data: [15, 14, 13, 14, 15, 16, 18, 20] },
+    ] },
+  ],
+  'arc-diagram': [
+    { items: [
+      { label: 'Sales', value: 80, connections: ['Marketing', 'Product', 'Support'] },
+      { label: 'Marketing', value: 65, connections: ['Sales', 'Product', 'Design'] },
+      { label: 'Product', value: 70, connections: ['Engineering', 'Design', 'Sales'] },
+      { label: 'Engineering', value: 85, connections: ['Product', 'DevOps', 'QA'] },
+      { label: 'Design', value: 45, connections: ['Product', 'Marketing'] },
+      { label: 'DevOps', value: 40, connections: ['Engineering', 'QA'] },
+      { label: 'QA', value: 35, connections: ['Engineering', 'DevOps'] },
+      { label: 'Support', value: 50, connections: ['Sales', 'Product'] },
+    ] },
+  ],
+  marimekko: [
+    { labels: ['Enterprise', 'Mid-market', 'SMB'], series: [
+      { name: 'Subscription', data: [55, 45, 30] },
+      { name: 'Services', data: [25, 30, 15] },
+      { name: 'Support', data: [15, 18, 40] },
+      { name: 'Training', data: [5, 7, 15] },
+    ] },
+  ],
+  gantt: [
+    { items: [
+      { label: 'Due diligence', value: 0, start: 0, end: 4, category: 'Phase 1' },
+      { label: 'Valuation', value: 0, start: 2, end: 5, category: 'Phase 1' },
+      { label: 'Negotiation', value: 0, start: 4, end: 7, category: 'Phase 2' },
+      { label: 'Regulatory', value: 0, start: 5, end: 9, category: 'Phase 2' },
+      { label: 'Integration plan', value: 0, start: 6, end: 10, category: 'Phase 3' },
+      { label: 'Day 1 readiness', value: 0, start: 9, end: 11, category: 'Phase 3' },
+      { label: 'Synergy capture', value: 0, start: 10, end: 16, category: 'Phase 4' },
+    ] },
+  ],
+  timeline: [
+    { items: [
+      { label: 'Series A', value: 2018, description: 'Raised $5M seed round' },
+      { label: 'Product launch', value: 2019, description: 'First public release' },
+      { label: 'Series B', value: 2020, description: '$25M growth round' },
+      { label: '100K users', value: 2021, description: 'Hit milestone' },
+      { label: 'Series C', value: 2022, description: '$80M expansion' },
+      { label: 'IPO', value: 2024, description: 'Public listing on NYSE' },
+    ] },
+  ],
+  'choropleth-map': [
+    { items: [
+      { label: 'US', value: 85 }, { label: 'GB', value: 78 }, { label: 'DE', value: 82 },
+      { label: 'FR', value: 75 }, { label: 'JP', value: 88 }, { label: 'CN', value: 65 },
+      { label: 'IN', value: 52 }, { label: 'BR', value: 58 }, { label: 'AU', value: 80 },
+      { label: 'CA', value: 83 }, { label: 'KR', value: 86 }, { label: 'MX', value: 55 },
+    ] },
+  ],
+  'bubble-map': [
+    { items: [
+      { label: 'US', value: 450 }, { label: 'GB', value: 180 }, { label: 'DE', value: 210 },
+      { label: 'JP', value: 160 }, { label: 'CN', value: 380 }, { label: 'IN', value: 290 },
+      { label: 'BR', value: 120 }, { label: 'AU', value: 95 }, { label: 'CA', value: 110 },
+      { label: 'FR', value: 140 },
+    ] },
+  ],
+  'dot-map': [
+    { items: [
+      { label: 'US', value: 12 }, { label: 'GB', value: 6 }, { label: 'DE', value: 5 },
+      { label: 'FR', value: 4 }, { label: 'JP', value: 4 }, { label: 'AU', value: 3 },
+      { label: 'CA', value: 3 }, { label: 'BR', value: 2 }, { label: 'IN', value: 2 },
+    ] },
+  ],
+  'connection-map': [
+    { items: [
+      { label: 'LDN-NYC', source: 'GB', target: 'US', value: 350 },
+      { label: 'LDN-SG', source: 'GB', target: 'SG', value: 120 },
+      { label: 'NYC-TKY', source: 'US', target: 'JP', value: 180 },
+      { label: 'NYC-SYD', source: 'US', target: 'AU', value: 95 },
+      { label: 'SG-TKY', source: 'SG', target: 'JP', value: 140 },
+      { label: 'FRA-NYC', source: 'DE', target: 'US', value: 200 },
+      { label: 'SG-SYD', source: 'SG', target: 'AU', value: 85 },
+    ] },
+  ],
+  'flow-map': [
+    { items: [
+      { label: 'US-EU', source: 'US', target: 'DE', value: 420 },
+      { label: 'CN-US', source: 'CN', target: 'US', value: 580 },
+      { label: 'JP-US', source: 'JP', target: 'US', value: 210 },
+      { label: 'DE-CN', source: 'DE', target: 'CN', value: 280 },
+      { label: 'US-MX', source: 'US', target: 'MX', value: 350 },
+      { label: 'KR-CN', source: 'KR', target: 'CN', value: 180 },
+      { label: 'AU-CN', source: 'AU', target: 'CN', value: 145 },
+    ] },
+  ],
 };
 
 /**

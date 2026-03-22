@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
 import type { ChartOptions, ReferenceLine } from '../../types/chart';
+import { BRAND_THEMES, getBrandTheme } from '../../theme/brands';
 
 interface OptionsPanelProps {
   options: ChartOptions;
   onChange: (options: ChartOptions) => void;
 }
-
-const ECONOMIST_PALETTE = [
-  '#e3120b', '#0f5499', '#262a33', '#6b7d8a',
-  '#f0810f', '#00857c', '#8b572a', '#a5526a',
-];
 
 const Y_FORMATS: { value: ChartOptions['yAxisFormat']; label: string }[] = [
   { value: 'number', label: 'Number (1,234)' },
@@ -262,9 +258,10 @@ export default function OptionsPanel({ options, onChange }: OptionsPanelProps) {
     onChange({ ...options, [key]: value });
   };
 
+  const currentTheme = getBrandTheme(options.brandTheme ?? 'economist');
   const colors = options.colorOverrides.length
     ? options.colorOverrides
-    : ECONOMIST_PALETTE;
+    : currentTheme.colors.palette.slice(0, 8);
 
   const handleColorChange = (index: number, newColor: string) => {
     const next = [...colors];
@@ -335,6 +332,49 @@ export default function OptionsPanel({ options, onChange }: OptionsPanelProps) {
           onChange={(e) => update('footnote', e.target.value)}
           placeholder="Optional note or methodology"
         />
+      </div>
+
+      <hr style={s.divider} />
+
+      {/* ── Theme picker ───────────────────────────── */}
+      <div style={s.group}>
+        <label style={s.label}>Theme</label>
+        <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+          {BRAND_THEMES.map((theme) => (
+            <button
+              key={theme.id}
+              onClick={() => {
+                onChange({
+                  ...options,
+                  brandTheme: theme.id,
+                  colorOverrides: theme.colors.palette.slice(0, 8),
+                });
+              }}
+              style={{
+                padding: '5px 10px',
+                fontSize: 11,
+                fontWeight: (options.brandTheme ?? 'economist') === theme.id ? 700 : 500,
+                border: (options.brandTheme ?? 'economist') === theme.id
+                  ? `2px solid ${theme.masthead.background}`
+                  : '1px solid #E8E0D4',
+                borderRadius: 5,
+                background: (options.brandTheme ?? 'economist') === theme.id ? `${theme.masthead.background}10` : '#fff',
+                color: '#2D2A26',
+                cursor: 'pointer',
+                fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+                display: 'flex',
+                alignItems: 'center',
+                gap: 5,
+              }}
+            >
+              <span style={{
+                width: 10, height: 10, borderRadius: 2,
+                background: theme.masthead.background, flexShrink: 0,
+              }} />
+              {theme.name}
+            </button>
+          ))}
+        </div>
       </div>
 
       <hr style={s.divider} />

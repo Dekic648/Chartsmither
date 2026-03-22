@@ -149,6 +149,9 @@ export interface ChartOptions {
   legendPosition: 'top' | 'bottom' | 'none';
   referenceLines: ReferenceLine[];
 
+  // Theme
+  brandTheme: string;
+
   // Phase 2 — Customization depth
   yAxisMin: number | null;
   yAxisMax: number | null;
@@ -182,6 +185,9 @@ export const DEFAULT_OPTIONS: ChartOptions = {
   footnote: '',
   legendPosition: 'top',
   referenceLines: [],
+
+  // Theme
+  brandTheme: 'economist',
 
   // Phase 2
   yAxisMin: null,
