@@ -19,7 +19,6 @@ import type { ChartData, ChartOptions } from '../../types/chart';
 import {
   CHARTJS_ECONOMIST_DEFAULTS,
   ECONOMIST_COLORS,
-  ECONOMIST_FONTS,
   getColor,
   getColors,
 } from '../../theme/economist';
@@ -756,7 +755,7 @@ export const PieChart: React.FC<ChartJSChartProps> = ({ data, options, height })
           ? {
               display: true,
               color: '#fff',
-              font: { size: 11, family: ECONOMIST_FONTS.sans, weight: 600 as const },
+              font: { size: 11, family: getBrandTheme(options.brandTheme ?? 'economist').fonts.body, weight: 600 as const },
               formatter: (_value: number, ctx: unknown) => {
                 const c = ctx as { dataset: { data: number[] } };
                 const total = c.dataset.data.reduce((a: number, b: number) => a + b, 0);
@@ -821,7 +820,7 @@ export const DonutChart: React.FC<ChartJSChartProps> = ({ data, options, height 
           ? {
               display: true,
               color: '#fff',
-              font: { size: 11, family: ECONOMIST_FONTS.sans, weight: 600 as const },
+              font: { size: 11, family: getBrandTheme(options.brandTheme ?? 'economist').fonts.body, weight: 600 as const },
               formatter: (_value: number, ctx: unknown) => {
                 const c = ctx as { dataset: { data: number[] } };
                 const total = c.dataset.data.reduce((a: number, b: number) => a + b, 0);
@@ -901,15 +900,15 @@ export const RadarChart: React.FC<ChartJSChartProps> = ({ data, options, height 
       },
       scales: {
         r: {
-          angleLines: { color: ECONOMIST_COLORS.gridLine },
-          grid: { color: ECONOMIST_COLORS.gridLine, lineWidth: 0.8 },
+          angleLines: { color: getBrandTheme(options.brandTheme ?? 'economist').colors.gridLine },
+          grid: { color: getBrandTheme(options.brandTheme ?? 'economist').colors.gridLine, lineWidth: 0.8 },
           pointLabels: {
-            color: ECONOMIST_COLORS.textSecondary,
-            font: { size: 11, family: ECONOMIST_FONTS.sans },
+            color: getBrandTheme(options.brandTheme ?? 'economist').colors.textSecondary,
+            font: { size: 11, family: getBrandTheme(options.brandTheme ?? 'economist').fonts.body },
           },
           ticks: {
-            color: ECONOMIST_COLORS.axis,
-            font: { size: 10, family: ECONOMIST_FONTS.sans },
+            color: getBrandTheme(options.brandTheme ?? 'economist').colors.axis,
+            font: { size: 10, family: getBrandTheme(options.brandTheme ?? 'economist').fonts.body },
             backdropColor: 'transparent',
             callback: (value: number | string) => formatTick(value, options.yAxisFormat, fmtOpts),
           },
