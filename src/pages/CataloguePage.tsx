@@ -118,6 +118,9 @@ const CataloguePage: React.FC = () => {
                   e.currentTarget.style.transform = 'translateY(0)';
                 }}
               >
+                <div style={{ marginBottom: 8 }}>
+                  <ChartThumbnail typeId={saved.typeId as ChartTypeId} />
+                </div>
                 <p style={{ fontSize: 13, fontWeight: 600, color: '#1A1714', margin: '0 0 3px', lineHeight: 1.3, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                   {saved.title}
                 </p>
