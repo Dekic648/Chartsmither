@@ -2,7 +2,7 @@ import React, { useRef, useState, useCallback } from 'react';
 import Papa from 'papaparse';
 import type { ChartTypeId, ChartData, DataShape } from '../../types/chart';
 import { CHART_CATALOGUE } from '../../types/catalogue';
-import { getSampleData, getAlternateSampleData } from '../../utils/sampleData';
+import { getAlternateSampleData } from '../../utils/sampleData';
 import { smartParse, validateData, detectFormat } from '../../utils/dataTransform';
 
 interface DataEditorProps {

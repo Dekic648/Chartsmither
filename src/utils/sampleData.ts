@@ -806,9 +806,9 @@ const altSampleSets: Partial<Record<ChartTypeId, ChartData[]>> = {
   ],
   'diverging-bar': [
     { items: [
-      { label: 'Strategy', left: 82, right: 45 }, { label: 'Operations', left: 65, right: 70 },
-      { label: 'Finance', left: 58, right: 62 }, { label: 'Technology', left: 40, right: 88 },
-      { label: 'People', left: 75, right: 55 },
+      { label: 'Strategy', value: 0, left: 82, right: 45 }, { label: 'Operations', value: 0, left: 65, right: 70 },
+      { label: 'Finance', value: 0, left: 58, right: 62 }, { label: 'Technology', value: 0, left: 40, right: 88 },
+      { label: 'People', value: 0, left: 75, right: 55 },
     ] },
   ],
   heatmap: [
