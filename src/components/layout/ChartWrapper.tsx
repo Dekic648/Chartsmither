@@ -37,7 +37,7 @@ function buildStyles(t: BrandTheme, titleFontSize?: number, subtitleFontSize?: n
 
     masthead: {
       background: t.masthead.background,
-      padding: '14px 20px 12px',
+      padding: '16px 20px',
       lineHeight: 1.25,
     } as React.CSSProperties,
 
@@ -52,7 +52,7 @@ function buildStyles(t: BrandTheme, titleFontSize?: number, subtitleFontSize?: n
     } as React.CSSProperties,
 
     subtitleBar: {
-      padding: '10px 20px 6px',
+      padding: '8px 20px',
       borderBottom: '1px solid var(--cc-card-border, #e0e0e0)',
     } as React.CSSProperties,
 
@@ -68,15 +68,15 @@ function buildStyles(t: BrandTheme, titleFontSize?: number, subtitleFontSize?: n
     legend: {
       display: 'flex',
       flexWrap: 'wrap',
-      gap: '14px',
-      padding: '10px 20px',
+      gap: '16px',
+      padding: '8px 20px',
       borderBottom: '1px solid var(--cc-card-border, #e0e0e0)',
     } as React.CSSProperties,
 
     legendEntry: {
       display: 'flex',
       alignItems: 'center',
-      gap: '6px',
+      gap: '8px',
       fontSize: '0.75rem',
       color: t.colors.textSecondary,
       fontFamily: t.fonts.body,

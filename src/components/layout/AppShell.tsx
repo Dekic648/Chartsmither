@@ -19,10 +19,10 @@ const AppShell: React.FC<AppShellProps> = ({ children }) => {
     <>
       <nav
         style={{
-          height: 52,
+          height: 56,
           display: 'flex',
           alignItems: 'center',
-          padding: '0 28px',
+          padding: '0 24px',
           background: '#FFFFFF',
           borderBottom: '1px solid var(--cc-card-border, #E8E0D4)',
           position: 'sticky',
@@ -66,10 +66,10 @@ const AppShell: React.FC<AppShellProps> = ({ children }) => {
         </a>
         <span
           style={{
-            fontSize: 12,
-            color: '#9B9488',
+            fontSize: 13,
+            color: '#5C574F',
             fontWeight: 400,
-            marginLeft: 10,
+            marginLeft: 8,
             lineHeight: 1,
             letterSpacing: '0.01em',
           }}

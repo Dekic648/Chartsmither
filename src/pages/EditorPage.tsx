@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
-import { ArrowLeft, Undo2, Redo2, X } from 'lucide-react';
+import { ArrowLeft, Undo2, Redo2, X, Maximize2, Minimize2 } from 'lucide-react';
 import { CHART_CATALOGUE } from '../types/catalogue';
 import type { ChartData, ChartOptions, ChartTypeId } from '../types/chart';
 import { DEFAULT_OPTIONS } from '../types/chart';
@@ -167,6 +167,9 @@ const EditorPage: React.FC = () => {
     );
   }
 
+  // Fullscreen chart preview
+  const [expanded, setExpanded] = useState(false);
+
   // First-visit hint bar
   const [showHint, setShowHint] = useState(() => {
     try { return !localStorage.getItem('chartcraft:hint_dismissed'); } catch { return false; }
@@ -196,7 +199,7 @@ const EditorPage: React.FC = () => {
       <div style={{
         display: 'flex',
         alignItems: 'center',
-        gap: 10,
+        gap: 8,
         marginBottom: 24,
         paddingBottom: 16,
         borderBottom: '1px solid #EDE7DD',
@@ -299,7 +302,7 @@ const EditorPage: React.FC = () => {
         <div style={{
           display: 'flex', alignItems: 'center', gap: 16,
           background: '#FAF4EA', border: '1px solid #EDE7DD', borderRadius: 8,
-          padding: '10px 16px', marginBottom: 16, fontSize: 13,
+          padding: '8px 16px', marginBottom: 16, fontSize: 13,
           fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
           color: '#2D2A26',
         }}>
@@ -326,45 +329,115 @@ const EditorPage: React.FC = () => {
       <div className="cc-editor-grid">
         {/* Left: Chart preview */}
         <div>
-          <div ref={chartRef}>
-            <ChartWrapper
-              title={options.title}
-              subtitle={options.subtitle}
-              source={options.source}
-              footnote={options.footnote}
-              legendItems={options.legendPosition !== 'none' ? legendItems : undefined}
-              legendPosition={options.legendPosition}
-              titleFontSize={options.titleFontSize}
-              subtitleFontSize={options.subtitleFontSize}
-              width={options.width}
-              theme={resolvedTheme}
+          <div style={{ position: 'relative' }}>
+            <div ref={chartRef}>
+              <ChartWrapper
+                title={options.title}
+                subtitle={options.subtitle}
+                source={options.source}
+                footnote={options.footnote}
+                legendItems={options.legendPosition !== 'none' ? legendItems : undefined}
+                legendPosition={options.legendPosition}
+                titleFontSize={options.titleFontSize}
+                subtitleFontSize={options.subtitleFontSize}
+                width={options.width}
+                theme={resolvedTheme}
+              >
+                <div style={{ position: 'relative', height: options.height - 100 }}>
+                  {Renderer ? (
+                    <Renderer
+                      data={data}
+                      options={options}
+                      width={options.width - 32}
+                      height={options.height - 100}
+                    />
+                  ) : (
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      height: '100%',
+                      color: ECONOMIST_COLORS.textTertiary,
+                      fontSize: 14,
+                    }}>
+                      Renderer not available for {meta.id}
+                    </div>
+                  )}
+                </div>
+              </ChartWrapper>
+            </div>
+            {/* Expand button */}
+            <button
+              onClick={() => setExpanded(true)}
+              title="Expand chart"
+              style={{
+                position: 'absolute', top: 8, right: 8,
+                width: 32, height: 32, borderRadius: 6,
+                background: 'rgba(255,255,255,0.9)', border: '1px solid #E8E0D4',
+                cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                color: '#7A7468', transition: 'all 0.15s', zIndex: 2,
+                boxShadow: '0 1px 4px rgba(60,45,20,0.08)',
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = '#E3120B'; e.currentTarget.style.borderColor = '#E3120B'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = '#7A7468'; e.currentTarget.style.borderColor = '#E8E0D4'; }}
             >
-              <div style={{ position: 'relative', height: options.height - 100 }}>
-                {Renderer ? (
-                  <Renderer
-                    data={data}
-                    options={options}
-                    width={options.width - 32}
-                    height={options.height - 100}
-                  />
-                ) : (
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    height: '100%',
-                    color: ECONOMIST_COLORS.textTertiary,
-                    fontSize: 14,
-                  }}>
-                    Renderer not available for {meta.id}
-                  </div>
-                )}
-              </div>
-            </ChartWrapper>
+              <Maximize2 size={14} />
+            </button>
           </div>
 
           <ExportBar chartRef={chartRef} title={options.title} />
         </div>
+
+        {/* Fullscreen overlay */}
+        {expanded && (
+          <div
+            onClick={() => setExpanded(false)}
+            style={{
+              position: 'fixed', inset: 0, zIndex: 1000,
+              background: 'rgba(26,23,20,0.85)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              padding: 32, cursor: 'zoom-out',
+            }}
+          >
+            <div onClick={(e) => e.stopPropagation()} style={{ cursor: 'default', maxWidth: '90vw', maxHeight: '90vh', overflow: 'auto' }}>
+              <ChartWrapper
+                title={options.title}
+                subtitle={options.subtitle}
+                source={options.source}
+                footnote={options.footnote}
+                legendItems={options.legendPosition !== 'none' ? legendItems : undefined}
+                legendPosition={options.legendPosition}
+                titleFontSize={options.titleFontSize ? options.titleFontSize * 1.4 : undefined}
+                subtitleFontSize={options.subtitleFontSize ? options.subtitleFontSize * 1.3 : undefined}
+                width={Math.min(options.width * 1.6, 1000)}
+                theme={resolvedTheme}
+              >
+                <div style={{ position: 'relative', height: (options.height - 100) * 1.5 }}>
+                  {Renderer && (
+                    <Renderer
+                      data={data}
+                      options={options}
+                      width={Math.min(options.width * 1.6, 1000) - 32}
+                      height={(options.height - 100) * 1.5}
+                    />
+                  )}
+                </div>
+              </ChartWrapper>
+            </div>
+            <button
+              onClick={() => setExpanded(false)}
+              style={{
+                position: 'absolute', top: 24, right: 24,
+                width: 40, height: 40, borderRadius: 8,
+                background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.2)',
+                cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                color: '#fff',
+              }}
+            >
+              <Minimize2 size={18} />
+            </button>
+          </div>
+        )}
 
         {/* Right: Controls -- data first, then options, then share */}
         {!isEmbed && (

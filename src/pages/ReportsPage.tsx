@@ -271,7 +271,7 @@ function ReportBuilder({ reportId, onBack }: { reportId: string; onBack: () => v
 
       {/* Metadata bar */}
       <div style={{
-        display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 10,
+        display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: 8,
         background: '#fff', border: '1px solid #E8E0D4', borderRadius: 8, padding: 14, marginBottom: 16,
       }}>
         <div><p style={s.label}>Client name</p><input style={s.input} value={report.clientName} onChange={(e) => updateReport({ clientName: e.target.value })} placeholder="Acme Corp" /></div>

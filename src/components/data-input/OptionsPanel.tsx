@@ -55,7 +55,7 @@ const s = {
   sectionContent: {
     display: 'flex',
     flexDirection: 'column' as const,
-    gap: '10px',
+    gap: '8px',
     paddingTop: '4px',
   },
   group: {
@@ -181,7 +181,7 @@ const s = {
   divider: {
     border: 'none',
     borderTop: '1px solid #EDE7DD',
-    margin: '2px 0',
+    margin: '8px 0',
   },
   row: {
     display: 'flex',

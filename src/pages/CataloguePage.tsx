@@ -57,7 +57,7 @@ const CataloguePage: React.FC = () => {
                 onClick={() => navigate(`/edit/${id}`)}
                 style={{
                   background: '#FFFFFF', border: '2px solid #E8E0D4', borderRadius: 10,
-                  padding: '20px 16px 16px', cursor: 'pointer', textAlign: 'left',
+                  padding: 16, cursor: 'pointer', textAlign: 'left',
                   transition: 'all 0.2s ease',
                   boxShadow: '0 2px 8px rgba(60, 45, 20, 0.04)',
                 }}
@@ -72,7 +72,7 @@ const CataloguePage: React.FC = () => {
                   e.currentTarget.style.transform = 'translateY(0)';
                 }}
               >
-                <div style={{ marginBottom: 10 }}>
+                <div style={{ marginBottom: 8 }}>
                   <ChartThumbnail typeId={id} />
                 </div>
                 <p style={{ fontSize: 15, fontWeight: 700, color: '#1A1714', margin: '0 0 4px', lineHeight: 1.2 }}>
@@ -164,7 +164,7 @@ const CataloguePage: React.FC = () => {
                   onClick={() => navigate(`/edit/${chart.id}`)}
                   style={{
                     background: '#FFFFFF', border: '1px solid #E8E0D4', borderRadius: 8,
-                    padding: '16px 16px 14px', cursor: 'pointer', textAlign: 'left',
+                    padding: 16, cursor: 'pointer', textAlign: 'left',
                     transition: 'all 0.2s ease',
                     boxShadow: '0 1px 3px rgba(60, 45, 20, 0.03)',
                   }}

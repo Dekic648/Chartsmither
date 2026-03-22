@@ -97,7 +97,7 @@ const ExportBar: React.FC<ExportBarProps> = ({ chartRef, title }) => {
       </div>
 
       {/* Secondary row: SVG, HTML, Embed */}
-      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 8 }}>
+      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 16 }}>
         <button style={btnStyle} onClick={() => wrap('SVG', () => exportSvg(chartRef.current!, `${slug}.svg`))}>
           <Download size={14} /> SVG
         </button>

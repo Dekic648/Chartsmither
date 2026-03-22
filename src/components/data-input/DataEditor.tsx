@@ -300,7 +300,7 @@ const s = {
     display: 'flex',
     gap: '0px',
     borderBottom: '1px solid #EDE7DD',
-    marginBottom: '4px',
+    marginBottom: '8px',
   },
   tab: {
     padding: '7px 14px',
