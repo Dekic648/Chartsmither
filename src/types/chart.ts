@@ -60,6 +60,13 @@ export type ChartTypeId =
   | 'gantt'
   | 'timeline'
   | 'error-bars'
+  // Tier 3 — advanced
+  | 'slope-chart'
+  | 'dumbbell-chart'
+  | 'waffle-chart'
+  | 'bump-chart'
+  | 'small-multiples'
+  | 'beeswarm'
   // Maps
   | 'choropleth-map'
   | 'bubble-map'

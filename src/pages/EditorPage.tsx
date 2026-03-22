@@ -17,6 +17,7 @@ import { SVG_RENDERERS } from '../charts/svg';
 import { TIER2_BATCH1_RENDERERS } from '../charts/svg/tier2-batch1';
 import { TIER2_BATCH2_RENDERERS } from '../charts/svg/tier2-batch2';
 import { TIER2_BATCH3_RENDERERS } from '../charts/svg/tier2-batch3';
+import { TIER3_RENDERERS } from '../charts/svg/tier3';
 import { MAP_RENDERERS } from '../charts/maps';
 import SharePanel from '../components/export/SharePanel';
 import { useHistory } from '../utils/useHistory';
@@ -29,6 +30,7 @@ const ALL_SVG_RENDERERS = {
   ...TIER2_BATCH1_RENDERERS,
   ...TIER2_BATCH2_RENDERERS,
   ...TIER2_BATCH3_RENDERERS,
+  ...TIER3_RENDERERS,
   ...MAP_RENDERERS,
 };
 

@@ -658,6 +658,76 @@ const thumbnails: Record<ChartTypeId, React.ReactNode> = {
       <circle cx={78} cy={22} r={2.5} fill={GREEN} fillOpacity={0.7} />
     </>
   ),
+
+  // ── Tier 3 — Advanced ──
+  'slope-chart': (
+    <>
+      <line x1={20} y1={8} x2={20} y2={56} stroke="#E8E0D4" strokeWidth={0.5} />
+      <line x1={100} y1={8} x2={100} y2={56} stroke="#E8E0D4" strokeWidth={0.5} />
+      <line x1={20} y1={12} x2={100} y2={28} stroke={BLUE} strokeWidth={2} />
+      <line x1={20} y1={24} x2={100} y2={16} stroke={RED} strokeWidth={2} />
+      <line x1={20} y1={38} x2={100} y2={44} stroke={GREEN} strokeWidth={2} />
+      <line x1={20} y1={50} x2={100} y2={36} stroke={ORANGE} strokeWidth={2} />
+      <circle cx={20} cy={12} r={3} fill={BLUE} /><circle cx={100} cy={28} r={3} fill={BLUE} />
+      <circle cx={20} cy={24} r={3} fill={RED} /><circle cx={100} cy={16} r={3} fill={RED} />
+    </>
+  ),
+  'dumbbell-chart': (
+    <>
+      {[14, 28, 42, 56].map((y, i) => (
+        <g key={i}>
+          <line x1={20 + i * 8} y1={y} x2={80 + i * 4} y2={y} stroke="#E8E0D4" strokeWidth={2} />
+          <circle cx={20 + i * 8} cy={y} r={4} fill={BLUE} />
+          <circle cx={80 + i * 4} cy={y} r={4} fill={RED} />
+        </g>
+      ))}
+    </>
+  ),
+  'waffle-chart': (
+    <>
+      {Array.from({ length: 25 }, (_, i) => {
+        const row = Math.floor(i / 5);
+        const col = i % 5;
+        const c = i < 14 ? BLUE : i < 19 ? RED : GREEN;
+        return <rect key={i} x={20 + col * 17} y={6 + row * 12} width={14} height={10} fill={c} rx={1.5} />;
+      })}
+    </>
+  ),
+  'bump-chart': (
+    <>
+      <path d="M10,12 C30,12 30,30 50,30 C70,30 70,12 90,12 C100,12 110,20 110,20" fill="none" stroke={BLUE} strokeWidth={2} />
+      <path d="M10,30 C30,30 30,12 50,12 C70,12 70,48 90,48 C100,48 110,40 110,40" fill="none" stroke={RED} strokeWidth={2} />
+      <path d="M10,48 C30,48 30,48 50,48 C70,48 70,30 90,30 C100,30 110,48 110,48" fill="none" stroke={GREEN} strokeWidth={2} />
+      <circle cx={10} cy={12} r={3} fill={BLUE} /><circle cx={110} cy={20} r={3} fill={BLUE} />
+      <circle cx={10} cy={30} r={3} fill={RED} /><circle cx={110} cy={40} r={3} fill={RED} />
+    </>
+  ),
+  'small-multiples': (
+    <>
+      {[0, 1, 2, 3].map((i) => {
+        const ox = (i % 2) * 56 + 6;
+        const oy = Math.floor(i / 2) * 30 + 4;
+        const c = [BLUE, RED, GREEN, ORANGE][i];
+        return (
+          <g key={i}>
+            <rect x={ox} y={oy} width={50} height={26} fill="none" stroke="#E8E0D4" strokeWidth={0.5} rx={2} />
+            <rect x={ox + 6} y={oy + 14} width={8} height={10} fill={c} rx={1} />
+            <rect x={ox + 18} y={oy + 8} width={8} height={16} fill={c} rx={1} />
+            <rect x={ox + 30} y={oy + 11} width={8} height={13} fill={c} rx={1} />
+          </g>
+        );
+      })}
+    </>
+  ),
+  beeswarm: (
+    <>
+      <line x1={10} y1={52} x2={110} y2={52} stroke="#E8E0D4" strokeWidth={0.5} />
+      {[18, 22, 25, 28, 30, 32, 34, 36, 40, 45, 50, 58, 68, 78, 92, 100].map((x, i) => {
+        const y = 36 + (i % 3 - 1) * 9;
+        return <circle key={i} cx={x} cy={y} r={3.5} fill={BLUE} fillOpacity={0.6} />;
+      })}
+    </>
+  ),
 };
 
 interface ChartThumbnailProps {

@@ -463,6 +463,62 @@ export const CHART_CATALOGUE: ChartTypeMeta[] = [
     dataShape: 'flow',
     icon: '➡',
   },
+
+  // ── Tier 3 — Advanced ───────────────────────────────
+  {
+    id: 'slope-chart',
+    name: 'Slope chart',
+    description: 'Compare rankings or values between two time points. Before vs. after.',
+    category: 'line',
+    engine: 'svg',
+    dataShape: 'multi-series',
+    icon: '📐',
+  },
+  {
+    id: 'dumbbell-chart',
+    name: 'Dumbbell chart',
+    description: 'Two dots connected by a line. Show gaps between two values per category.',
+    category: 'horizontal',
+    engine: 'svg',
+    dataShape: 'multi-series',
+    icon: '🏋',
+  },
+  {
+    id: 'waffle-chart',
+    name: 'Waffle chart',
+    description: 'Square grid showing proportions. More precise than pie charts.',
+    category: 'part-to-whole',
+    engine: 'svg',
+    dataShape: 'key-value',
+    icon: '🧇',
+  },
+  {
+    id: 'bump-chart',
+    name: 'Bump chart',
+    description: 'Rankings over time with smooth curves. Who moved up, who fell.',
+    category: 'ranking',
+    engine: 'svg',
+    dataShape: 'multi-series',
+    icon: '📈',
+  },
+  {
+    id: 'small-multiples',
+    name: 'Small multiples',
+    description: 'Same chart repeated for each category. Spot patterns across groups.',
+    category: 'other',
+    engine: 'svg',
+    dataShape: 'multi-series',
+    icon: '🔲',
+  },
+  {
+    id: 'beeswarm',
+    name: 'Beeswarm plot',
+    description: 'Individual data points spread along an axis. See every value, not just the summary.',
+    category: 'distribution',
+    engine: 'svg',
+    dataShape: 'distribution',
+    icon: '🐝',
+  },
 ];
 
 export const CHART_CATEGORIES: { id: string; label: string }[] = [

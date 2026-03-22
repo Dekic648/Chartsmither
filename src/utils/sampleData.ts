@@ -714,6 +714,67 @@ const sampleDataMap: Record<ChartTypeId, ChartData> = {
       { label: 'RO-IT', source: 'RO', target: 'IT', value: 130 },
     ],
   },
+
+  // ── Tier 3 — Advanced ────────────────────────────
+  'slope-chart': {
+    labels: ['2019', '2024'],
+    series: [
+      { name: 'United States', data: [1, 1] },
+      { name: 'China', data: [2, 2] },
+      { name: 'Japan', data: [3, 5] },
+      { name: 'Germany', data: [4, 3] },
+      { name: 'India', data: [5, 4] },
+      { name: 'United Kingdom', data: [6, 7] },
+      { name: 'France', data: [7, 6] },
+    ],
+  },
+
+  'dumbbell-chart': {
+    labels: ['Engineering', 'Sales', 'Marketing', 'Operations', 'Support', 'Finance'],
+    series: [
+      { name: '2022', data: [82, 68, 71, 75, 64, 79] },
+      { name: '2024', data: [91, 85, 78, 80, 72, 83] },
+    ],
+  },
+
+  'waffle-chart': {
+    items: [
+      { label: 'Renewable', value: 28 },
+      { label: 'Nuclear', value: 10 },
+      { label: 'Natural Gas', value: 32 },
+      { label: 'Coal', value: 22 },
+      { label: 'Oil', value: 8 },
+    ],
+  },
+
+  'bump-chart': {
+    labels: ['2019', '2020', '2021', '2022', '2023', '2024'],
+    series: [
+      { name: 'Company A', data: [1, 1, 2, 3, 2, 1] },
+      { name: 'Company B', data: [2, 3, 1, 1, 1, 2] },
+      { name: 'Company C', data: [3, 2, 3, 2, 3, 4] },
+      { name: 'Company D', data: [4, 4, 4, 4, 4, 3] },
+      { name: 'Company E', data: [5, 5, 5, 5, 5, 5] },
+    ],
+  },
+
+  'small-multiples': {
+    labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+    series: [
+      { name: 'North', data: [42, 48, 55, 52] },
+      { name: 'South', data: [38, 35, 40, 45] },
+      { name: 'East', data: [28, 32, 30, 38] },
+      { name: 'West', data: [55, 60, 58, 62] },
+    ],
+  },
+
+  beeswarm: {
+    raw: [
+      22, 24, 25, 27, 28, 29, 30, 30, 31, 31, 32, 32, 32, 33, 33, 33, 34, 34,
+      34, 34, 35, 35, 35, 36, 36, 36, 37, 37, 38, 38, 39, 40, 41, 42, 44, 46,
+      48, 50, 52, 55, 58, 62, 68, 75, 82,
+    ],
+  },
 };
 
 export function getSampleData(chartTypeId: ChartTypeId): ChartData {
@@ -1148,6 +1209,43 @@ const altSampleSets: Partial<Record<ChartTypeId, ChartData[]>> = {
       { label: 'KR-CN', source: 'KR', target: 'CN', value: 180 },
       { label: 'AU-CN', source: 'AU', target: 'CN', value: 145 },
     ] },
+  ],
+
+  // Tier 3
+  'slope-chart': [
+    { labels: ['Before', 'After'], series: [
+      { name: 'Satisfaction', data: [3, 1] }, { name: 'Speed', data: [5, 2] },
+      { name: 'Quality', data: [1, 3] }, { name: 'Cost', data: [2, 5] },
+      { name: 'Support', data: [4, 4] },
+    ] },
+  ],
+  'dumbbell-chart': [
+    { labels: ['New York', 'London', 'Tokyo', 'Sydney', 'Berlin'], series: [
+      { name: 'Min temp', data: [-2, 2, 1, 8, -3] },
+      { name: 'Max temp', data: [30, 25, 35, 28, 32] },
+    ] },
+  ],
+  'waffle-chart': [
+    { items: [
+      { label: 'Completed', value: 68 }, { label: 'In Progress', value: 22 }, { label: 'Not Started', value: 10 },
+    ] },
+  ],
+  'bump-chart': [
+    { labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'], series: [
+      { name: 'Product A', data: [3, 2, 1, 1, 2, 1] },
+      { name: 'Product B', data: [1, 1, 2, 3, 1, 2] },
+      { name: 'Product C', data: [2, 3, 3, 2, 3, 3] },
+    ] },
+  ],
+  'small-multiples': [
+    { labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'], series: [
+      { name: 'Team A', data: [8, 7, 9, 8, 6] },
+      { name: 'Team B', data: [6, 8, 7, 9, 7] },
+      { name: 'Team C', data: [5, 5, 6, 7, 8] },
+    ] },
+  ],
+  beeswarm: [
+    { raw: [15, 18, 20, 22, 24, 25, 26, 27, 28, 28, 29, 29, 30, 30, 31, 31, 32, 33, 34, 35, 36, 38, 40, 42, 45, 50] },
   ],
 };
 
