@@ -1,6 +1,6 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
-import { ArrowLeft, Undo2, Redo2 } from 'lucide-react';
+import { ArrowLeft, Undo2, Redo2, X } from 'lucide-react';
 import { CHART_CATALOGUE } from '../types/catalogue';
 import type { ChartData, ChartOptions, ChartTypeId } from '../types/chart';
 import { DEFAULT_OPTIONS } from '../types/chart';
@@ -167,6 +167,15 @@ const EditorPage: React.FC = () => {
     );
   }
 
+  // First-visit hint bar
+  const [showHint, setShowHint] = useState(() => {
+    try { return !localStorage.getItem('chartcraft:hint_dismissed'); } catch { return false; }
+  });
+  const dismissHint = () => {
+    setShowHint(false);
+    try { localStorage.setItem('chartcraft:hint_dismissed', '1'); } catch {}
+  };
+
   // Resolve theme
   const resolvedTheme = getBrandTheme(options.brandTheme ?? 'economist');
 
@@ -284,6 +293,34 @@ const EditorPage: React.FC = () => {
           <Redo2 size={15} />
         </button>
       </div>
+
+      {/* First-visit hint bar */}
+      {showHint && (
+        <div style={{
+          display: 'flex', alignItems: 'center', gap: 16,
+          background: '#FAF4EA', border: '1px solid #EDE7DD', borderRadius: 8,
+          padding: '10px 16px', marginBottom: 16, fontSize: 13,
+          fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+          color: '#2D2A26',
+        }}>
+          <span style={{ fontWeight: 600, color: '#E3120B', flexShrink: 0 }}>1.</span>
+          <span>Paste your data</span>
+          <span style={{ color: '#C4BDB3' }}>&rarr;</span>
+          <span style={{ fontWeight: 600, color: '#E3120B', flexShrink: 0 }}>2.</span>
+          <span>Customize the style</span>
+          <span style={{ color: '#C4BDB3' }}>&rarr;</span>
+          <span style={{ fontWeight: 600, color: '#E3120B', flexShrink: 0 }}>3.</span>
+          <span>Export</span>
+          <div style={{ flex: 1 }} />
+          <button
+            onClick={dismissHint}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9B9488', padding: 4 }}
+            title="Dismiss"
+          >
+            <X size={14} />
+          </button>
+        </div>
+      )}
 
       {/* Main layout: preview left, controls right */}
       <div className="cc-editor-grid">

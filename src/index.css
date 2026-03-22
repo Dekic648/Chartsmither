@@ -316,6 +316,12 @@ code {
   gap: 16px;
 }
 
+.cc-quickstart-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
 @media (max-width: 900px) {
   .cc-editor-grid {
     grid-template-columns: 1fr;
@@ -327,5 +333,9 @@ code {
 
   .cc-report-grid {
     grid-template-columns: 1fr;
+  }
+
+  .cc-quickstart-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
