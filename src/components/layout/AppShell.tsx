@@ -7,6 +7,7 @@ interface AppShellProps {
 
 const NAV_LINKS: { label: string; to: string }[] = [
   { label: 'Charts', to: '/' },
+  { label: 'My Charts', to: '/my-charts' },
   { label: 'Templates', to: '/templates' },
   { label: 'Reports', to: '/reports' },
   { label: 'Dashboard', to: '/dashboard' },

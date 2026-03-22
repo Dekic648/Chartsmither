@@ -4,6 +4,7 @@ import CataloguePage from './pages/CataloguePage';
 import TemplatesPage from './pages/TemplatesPage';
 import EditorPage from './pages/EditorPage';
 import DashboardPage from './pages/DashboardPage';
+import MyChartsPage from './pages/MyChartsPage';
 import ReportsPage from './pages/ReportsPage';
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
       <AppShell>
         <Routes>
           <Route path="/" element={<CataloguePage />} />
+          <Route path="/my-charts" element={<MyChartsPage />} />
           <Route path="/templates" element={<TemplatesPage />} />
           <Route path="/edit/:typeId" element={<EditorPage />} />
           <Route path="/reports" element={<ReportsPage />} />
