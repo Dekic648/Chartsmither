@@ -4,6 +4,7 @@ import CataloguePage from './pages/CataloguePage';
 import TemplatesPage from './pages/TemplatesPage';
 import EditorPage from './pages/EditorPage';
 import DashboardPage from './pages/DashboardPage';
+import ReportsPage from './pages/ReportsPage';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route path="/" element={<CataloguePage />} />
           <Route path="/templates" element={<TemplatesPage />} />
           <Route path="/edit/:typeId" element={<EditorPage />} />
+          <Route path="/reports" element={<ReportsPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
         </Routes>
       </AppShell>

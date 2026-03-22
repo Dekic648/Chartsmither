@@ -120,6 +120,38 @@ export interface ChartConfig {
   options: ChartOptions;
 }
 
+// ── Chart Gallery (saved charts with unique IDs) ────
+
+export interface SavedChart {
+  id: string;
+  typeId: ChartTypeId;
+  title: string;
+  data: ChartData;
+  options: ChartOptions;
+  savedAt: number;
+}
+
+// ── Reports ─────────────────────────────────────────
+
+export interface ReportPage {
+  chartId: string;       // SavedChart.id
+  chartTypeId: ChartTypeId;
+}
+
+export interface Report {
+  id: string;
+  clientName: string;
+  firmName: string;
+  title: string;
+  date: string;
+  preparedBy: string;
+  confidentiality: 'confidential' | 'internal' | 'public';
+  brandTheme: string;
+  pages: ReportPage[];
+  createdAt: number;
+  updatedAt: number;
+}
+
 export interface ReferenceLine {
   axis: 'y' | 'x';
   value: number;

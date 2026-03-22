@@ -20,7 +20,7 @@ import { TIER2_BATCH3_RENDERERS } from '../charts/svg/tier2-batch3';
 import { MAP_RENDERERS } from '../charts/maps';
 import SharePanel from '../components/export/SharePanel';
 import { useHistory } from '../utils/useHistory';
-import { loadChart, autoSave } from '../utils/storage';
+import { loadChart, autoSave, saveToGallery } from '../utils/storage';
 import { decodeChartConfig } from '../utils/share';
 
 // Merge all SVG renderers
@@ -125,6 +125,15 @@ const EditorPage: React.FC = () => {
     if (typeId) {
       autoSave(typeId, data, options);
     }
+  }, [typeId, data, options]);
+
+  // Save to chart gallery (for reports) when user has meaningful data
+  useEffect(() => {
+    if (!typeId || !options.title) return;
+    const timer = setTimeout(() => {
+      saveToGallery(typeId as ChartTypeId, data, options);
+    }, 2000);
+    return () => clearTimeout(timer);
   }, [typeId, data, options]);
 
   const handleLoadSample = () => {
