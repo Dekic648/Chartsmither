@@ -128,12 +128,19 @@ const EditorPage: React.FC = () => {
   }, [typeId, data, options]);
 
   // Save to chart gallery (for reports) when user has meaningful data
+  // Saves on change (debounced 500ms) AND on unmount (navigate-away)
   useEffect(() => {
     if (!typeId || !options.title) return;
     const timer = setTimeout(() => {
       saveToGallery(typeId as ChartTypeId, data, options);
-    }, 2000);
-    return () => clearTimeout(timer);
+    }, 500);
+    return () => {
+      clearTimeout(timer);
+      // Save immediately on navigate-away so gallery is populated
+      if (options.title) {
+        saveToGallery(typeId as ChartTypeId, data, options);
+      }
+    };
   }, [typeId, data, options]);
 
   const handleLoadSample = () => {

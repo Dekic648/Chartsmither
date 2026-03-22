@@ -310,6 +310,12 @@ code {
   h2 { font-size: 1.25rem; }
 }
 
+.cc-report-grid {
+  display: grid;
+  grid-template-columns: 180px 1fr 200px;
+  gap: 16px;
+}
+
 @media (max-width: 900px) {
   .cc-editor-grid {
     grid-template-columns: 1fr;
@@ -317,5 +323,9 @@ code {
 
   .cc-catalogue-grid {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+
+  .cc-report-grid {
+    grid-template-columns: 1fr;
   }
 }

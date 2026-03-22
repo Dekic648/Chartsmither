@@ -473,7 +473,7 @@ export default function OptionsPanel({ options, onChange }: OptionsPanelProps) {
       <hr style={s.divider} />
 
       {/* ── Reference Lines ────────────────────────── */}
-      <Section title="Reference Lines">
+      <Section title="Reference Lines (max 3)">
         {(options.referenceLines ?? []).map((ref, i) => (
           <div key={i} style={s.refLineCard}>
             <div style={s.row}>
@@ -562,7 +562,15 @@ export default function OptionsPanel({ options, onChange }: OptionsPanelProps) {
               style={s.inputSmall}
               type="number"
               value={options.yAxisMin ?? ''}
-              onChange={(e) => update('yAxisMin', e.target.value === '' ? null : parseFloat(e.target.value))}
+              onChange={(e) => {
+                const val = e.target.value === '' ? null : parseFloat(e.target.value);
+                if (val != null && options.yAxisMax != null && val > options.yAxisMax) {
+                  update('yAxisMin', options.yAxisMax);
+                  update('yAxisMax', val);
+                } else {
+                  update('yAxisMin', val);
+                }
+              }}
               placeholder="Auto"
             />
           </div>
@@ -572,7 +580,15 @@ export default function OptionsPanel({ options, onChange }: OptionsPanelProps) {
               style={s.inputSmall}
               type="number"
               value={options.yAxisMax ?? ''}
-              onChange={(e) => update('yAxisMax', e.target.value === '' ? null : parseFloat(e.target.value))}
+              onChange={(e) => {
+                const val = e.target.value === '' ? null : parseFloat(e.target.value);
+                if (val != null && options.yAxisMin != null && val < options.yAxisMin) {
+                  update('yAxisMax', options.yAxisMin);
+                  update('yAxisMin', val);
+                } else {
+                  update('yAxisMax', val);
+                }
+              }}
               placeholder="Auto"
             />
           </div>

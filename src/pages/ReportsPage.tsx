@@ -74,7 +74,13 @@ const s = {
 // ── Report List View ────────────────────────────────
 
 function ReportList({ onOpen, onCreate }: { onOpen: (id: string) => void; onCreate: () => void }) {
-  const reports = listReports();
+  const [reports, setReports] = useState(listReports());
+
+  const handleDelete = (id: string) => {
+    if (!confirm('Delete this report? This cannot be undone.')) return;
+    deleteReport(id);
+    setReports(listReports());
+  };
 
   return (
     <div style={s.page}>
@@ -113,7 +119,7 @@ function ReportList({ onOpen, onCreate }: { onOpen: (id: string) => void; onCrea
                 </div>
                 <button
                   style={{ ...s.btn, padding: '4px 8px', fontSize: 11 }}
-                  onClick={(e) => { e.stopPropagation(); deleteReport(r.id); window.location.reload(); }}
+                  onClick={(e) => { e.stopPropagation(); handleDelete(r.id); }}
                 >
                   <Trash2 size={12} />
                 </button>
@@ -215,8 +221,15 @@ function ReportBuilder({ reportId, onBack }: { reportId: string; onBack: () => v
     setSelectedPage(target);
   };
 
+  const warnIfEmpty = (): boolean => {
+    if (!report.title && !report.clientName) {
+      return confirm('Report title and client name are empty. Export anyway?');
+    }
+    return true;
+  };
+
   const handleExportPdf = async () => {
-    if (!previewRef.current) return;
+    if (!previewRef.current || !warnIfEmpty()) return;
     setExporting('Generating PDF...');
     try {
       await exportReportPdf(report, previewRef.current);
@@ -229,7 +242,7 @@ function ReportBuilder({ reportId, onBack }: { reportId: string; onBack: () => v
   };
 
   const handleExportPptx = async () => {
-    if (!previewRef.current) return;
+    if (!previewRef.current || !warnIfEmpty()) return;
     setExporting('Generating PPTX...');
     try {
       await exportReportPptx(report, previewRef.current);
@@ -277,7 +290,7 @@ function ReportBuilder({ reportId, onBack }: { reportId: string; onBack: () => v
       </div>
 
       {/* Main grid: page list | preview | chart picker */}
-      <div style={{ display: 'grid', gridTemplateColumns: '180px 1fr 200px', gap: 16 }}>
+      <div className="cc-report-grid">
 
         {/* Page list (left) */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>

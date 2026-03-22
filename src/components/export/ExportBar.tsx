@@ -56,6 +56,7 @@ const ExportBar: React.FC<ExportBarProps> = ({ chartRef, title }) => {
   const [dpi, setDpi] = useState(3);
 
   const slug = (title || 'chart').toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  const isReady = !!chartRef.current;
 
   const wrap = async (label: string, fn: () => Promise<void>) => {
     if (!chartRef.current) return;
@@ -74,13 +75,13 @@ const ExportBar: React.FC<ExportBarProps> = ({ chartRef, title }) => {
     <div style={{ padding: '14px 0 0' }}>
       {/* Primary row: PNG, PDF, PPTX */}
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
-        <button style={btnPrimaryStyle} onClick={() => wrap('PNG', () => exportPng(chartRef.current!, `${slug}.png`, dpi))}>
+        <button style={{ ...btnPrimaryStyle, opacity: isReady ? 1 : 0.5 }} disabled={!isReady} onClick={() => wrap('PNG', () => exportPng(chartRef.current!, `${slug}.png`, dpi))}>
           <Image size={14} /> PNG
         </button>
-        <button style={btnPrimaryStyle} onClick={() => wrap('PDF', () => exportPdf(chartRef.current!, `${slug}.pdf`, title))}>
+        <button style={{ ...btnPrimaryStyle, opacity: isReady ? 1 : 0.5 }} disabled={!isReady} onClick={() => wrap('PDF', () => exportPdf(chartRef.current!, `${slug}.pdf`, title, dpi))}>
           <FileText size={14} /> PDF
         </button>
-        <button style={btnPrimaryStyle} onClick={() => wrap('PPTX', () => exportPptx(chartRef.current!, `${slug}.pptx`, title))}>
+        <button style={{ ...btnPrimaryStyle, opacity: isReady ? 1 : 0.5 }} disabled={!isReady} onClick={() => wrap('PPTX', () => exportPptx(chartRef.current!, `${slug}.pptx`, title, dpi))}>
           <Presentation size={14} /> PPTX
         </button>
         <select

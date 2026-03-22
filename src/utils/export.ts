@@ -67,9 +67,9 @@ ${element.outerHTML}
   downloadBlob(blob, filename);
 }
 
-export async function exportPdf(element: HTMLElement, filename = 'chart.pdf', title?: string) {
+export async function exportPdf(element: HTMLElement, filename = 'chart.pdf', title?: string, pixelRatio = 4) {
   const dataUrl = await domToPng(element, {
-    scale: 4,
+    scale: pixelRatio,
     backgroundColor: '#ffffff',
     style: { fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" },
   });
@@ -110,9 +110,9 @@ export async function exportPdf(element: HTMLElement, filename = 'chart.pdf', ti
   pdf.save(filename);
 }
 
-export async function exportPptx(element: HTMLElement, filename = 'chart.pptx', title?: string) {
+export async function exportPptx(element: HTMLElement, filename = 'chart.pptx', title?: string, pixelRatio = 4) {
   const dataUrl = await domToPng(element, {
-    scale: 4,
+    scale: pixelRatio,
     backgroundColor: '#ffffff',
     style: { fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" },
   });

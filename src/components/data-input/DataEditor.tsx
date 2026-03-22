@@ -94,13 +94,20 @@ export default function DataEditor({ chartTypeId, data, onChange, onLoadSample }
   }, [rawText, dataShape, onChange]);
 
   const handlePasteEvent = useCallback((e: React.ClipboardEvent<HTMLTextAreaElement>) => {
-    // Only auto-convert in paste mode
-    if (editMode !== 'paste') return;
-
     const text = e.clipboardData.getData('text');
     if (!text.trim()) return;
 
+    // Auto-switch to paste mode if tabular data detected in JSON mode
     const format = detectFormat(text);
+    if (editMode !== 'paste') {
+      if (format === 'csv' || format === 'tsv' || format === 'single-column') {
+        setEditMode('paste');
+        // Fall through to auto-convert below
+      } else {
+        return;
+      }
+    }
+
     if (format === 'csv' || format === 'tsv' || format === 'single-column') {
       // Auto-convert on paste
       e.preventDefault();

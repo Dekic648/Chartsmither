@@ -23,6 +23,7 @@ import {
   getColor,
   getColors,
 } from '../../theme/economist';
+import { getBrandTheme } from '../../theme/brands';
 
 // ---------------------------------------------------------------------------
 // Register Chart.js components once
@@ -124,6 +125,12 @@ function buildBaseOptions(
   overrides: Record<string, unknown> = {},
 ): Record<string, unknown> {
   const fmtOpts = { decimalPlaces: opts.decimalPlaces, thousandSeparator: opts.thousandSeparator, currencySymbol: opts.currencySymbol };
+  const theme = getBrandTheme(opts.brandTheme ?? 'economist');
+  const fontBody = theme.fonts.body;
+  const textColor = theme.colors.textPrimary;
+  const textSecondary = theme.colors.textSecondary;
+  const gridColor = theme.colors.gridLine;
+  const axisColor = theme.colors.axis;
 
   const yTickCallback = (_value: unknown) => formatTick(_value as number, opts.yAxisFormat, fmtOpts);
 
@@ -134,8 +141,8 @@ function buildBaseOptions(
   const datalabels: Record<string, unknown> = opts.showDataLabels
     ? {
         display: true,
-        color: ECONOMIST_COLORS.textPrimary,
-        font: { size: 10, family: ECONOMIST_FONTS.sans, weight: 600 },
+        color: textColor,
+        font: { size: 10, family: fontBody, weight: 600 },
         anchor: opts.dataLabelPosition === 'center' ? 'center' : 'end',
         align: opts.dataLabelPosition === 'center' ? 'center' : 'top',
         formatter: (value: number) => formatTick(value, opts.yAxisFormat, fmtOpts),
@@ -151,7 +158,7 @@ function buildBaseOptions(
         type: 'line',
         yMin: ref.value,
         yMax: ref.value,
-        borderColor: ref.color || ECONOMIST_COLORS.target,
+        borderColor: ref.color || theme.colors.target,
         borderWidth: 1.5,
         borderDash: ref.dashed ? [6, 3] : [],
         label: {
@@ -159,8 +166,8 @@ function buildBaseOptions(
           content: ref.label,
           position: 'end',
           backgroundColor: 'rgba(255,255,255,0.85)',
-          color: ref.color || ECONOMIST_COLORS.target,
-          font: { size: 10, family: ECONOMIST_FONTS.sans },
+          color: ref.color || theme.colors.target,
+          font: { size: 10, family: fontBody },
           padding: 4,
         },
       };
@@ -169,7 +176,7 @@ function buildBaseOptions(
         type: 'line',
         xMin: ref.value,
         xMax: ref.value,
-        borderColor: ref.color || ECONOMIST_COLORS.target,
+        borderColor: ref.color || theme.colors.target,
         borderWidth: 1.5,
         borderDash: ref.dashed ? [6, 3] : [],
         label: {
@@ -177,8 +184,8 @@ function buildBaseOptions(
           content: ref.label,
           position: 'start',
           backgroundColor: 'rgba(255,255,255,0.85)',
-          color: ref.color || ECONOMIST_COLORS.target,
-          font: { size: 10, family: ECONOMIST_FONTS.sans },
+          color: ref.color || theme.colors.target,
+          font: { size: 10, family: fontBody },
           padding: 4,
         },
       };
@@ -189,18 +196,20 @@ function buildBaseOptions(
   const yScale: Record<string, unknown> = {
     grid: {
       display: opts.showGrid,
-      color: ECONOMIST_COLORS.gridLine,
-      lineWidth: 0.8,
+      color: gridColor,
+      lineWidth: theme.style.gridLineWidth ?? 0.8,
     },
     ticks: {
       callback: yTickCallback,
+      color: axisColor,
+      font: { size: 11, family: fontBody },
     },
     title: opts.yAxisLabel
       ? {
           display: true,
           text: opts.yAxisLabel,
-          color: ECONOMIST_COLORS.textSecondary,
-          font: { size: 11, family: ECONOMIST_FONTS.sans },
+          color: textSecondary,
+          font: { size: 11, family: fontBody },
         }
       : { display: false },
   };
@@ -235,13 +244,15 @@ function buildBaseOptions(
           ticks: {
             maxRotation: opts.xAxisLabelRotation ?? 0,
             minRotation: opts.xAxisLabelRotation ?? 0,
+            color: axisColor,
+            font: { size: 11, family: fontBody },
           },
           title: opts.xAxisLabel
             ? {
                 display: true,
                 text: opts.xAxisLabel,
-                color: ECONOMIST_COLORS.textSecondary,
-                font: { size: 11, family: ECONOMIST_FONTS.sans },
+                color: textSecondary,
+                font: { size: 11, family: fontBody },
               }
             : { display: false },
         },
@@ -393,7 +404,7 @@ export const StackedAreaChart: React.FC<ChartJSChartProps> = ({ data, options, h
         data: s.data,
         borderColor: s.color ?? colors[i],
         backgroundColor: `${s.color ?? colors[i]}66`, // ~40% opacity
-        borderWidth: options.lineWidth ? options.lineWidth * 0.6 : 1.5,
+        borderWidth: options.lineWidth ?? 1.5,
         pointRadius: 0,
         pointHoverRadius: (options.pointSize ?? 3),
         tension: 0.35,
