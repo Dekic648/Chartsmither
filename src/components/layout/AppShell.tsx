@@ -38,7 +38,7 @@ const AppShell: React.FC<AppShellProps> = ({ children }) => {
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: 10,
+            gap: 8,
             textDecoration: 'none',
           }}
         >
@@ -96,7 +96,7 @@ const AppShell: React.FC<AppShellProps> = ({ children }) => {
                   display: 'flex',
                   alignItems: 'center',
                   height: '100%',
-                  padding: '0 14px',
+                  padding: '0 16px',
                   fontSize: 13,
                   fontWeight: isActive ? 600 : 400,
                   color: isActive ? '#2D2A26' : '#9B9488',
@@ -121,7 +121,7 @@ const AppShell: React.FC<AppShellProps> = ({ children }) => {
           width: '100%',
           maxWidth: 1160,
           margin: '0 auto',
-          padding: '28px 24px 64px',
+          padding: '32px 24px 64px',
         }}
       >
         {children}

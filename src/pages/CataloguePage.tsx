@@ -105,7 +105,7 @@ const CataloguePage: React.FC = () => {
                 onClick={() => navigate(`/edit/${saved.typeId}`)}
                 style={{
                   background: '#FDF8F0', border: '1px solid #E8E0D4', borderRadius: 8,
-                  padding: '14px 14px 12px', cursor: 'pointer', textAlign: 'left',
+                  padding: 16, cursor: 'pointer', textAlign: 'left',
                   transition: 'all 0.2s ease',
                   boxShadow: '0 1px 3px rgba(60, 45, 20, 0.03)',
                 }}

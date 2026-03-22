@@ -20,12 +20,12 @@ const s = {
   panel: {
     display: 'flex',
     flexDirection: 'column' as const,
-    gap: '14px',
+    gap: '16px',
     fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
     background: '#FFFFFF',
     border: '1px solid #E8E0D4',
     borderRadius: '8px',
-    padding: '18px',
+    padding: '16px',
     boxShadow: '0 1px 4px rgba(60, 45, 20, 0.04)',
   },
   header: {
@@ -34,8 +34,8 @@ const s = {
     textTransform: 'uppercase' as const,
     letterSpacing: '0.08em',
     color: '#1A1714',
-    margin: '0 0 2px',
-    paddingBottom: '10px',
+    margin: '0 0 4px',
+    paddingBottom: '8px',
     borderBottom: '1px solid #EDE7DD',
   } as React.CSSProperties,
   sectionHeader: {
@@ -72,7 +72,7 @@ const s = {
     margin: 0,
   },
   input: {
-    padding: '8px 10px',
+    padding: '8px 8px',
     fontSize: '13px',
     border: '1px solid #E8E0D4',
     borderRadius: '5px',
@@ -96,7 +96,7 @@ const s = {
     boxSizing: 'border-box' as const,
   },
   select: {
-    padding: '8px 10px',
+    padding: '8px 8px',
     fontSize: '13px',
     border: '1px solid #E8E0D4',
     borderRadius: '5px',
@@ -216,7 +216,7 @@ const s = {
     display: 'flex',
     flexDirection: 'column' as const,
     gap: '6px',
-    padding: '8px 10px',
+    padding: '8px 8px',
     background: '#FAF4EA',
     borderRadius: '5px',
     border: '1px solid #EDE7DD',

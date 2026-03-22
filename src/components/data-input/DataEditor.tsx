@@ -278,12 +278,12 @@ const s = {
   container: {
     display: 'flex',
     flexDirection: 'column' as const,
-    gap: '10px',
+    gap: '8px',
     fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
     background: '#FFFFFF',
     border: '1px solid #E8E0D4',
     borderRadius: '8px',
-    padding: '18px',
+    padding: '16px',
     boxShadow: '0 1px 4px rgba(60, 45, 20, 0.04)',
   },
   header: {
@@ -338,7 +338,7 @@ const s = {
     fontFamily: "'SF Mono', 'Fira Code', monospace",
     color: '#9B9488',
     background: '#FAF4EA',
-    padding: '8px 10px',
+    padding: '8px 8px',
     borderRadius: '4px',
     margin: 0,
     lineHeight: 1.5,
@@ -418,7 +418,7 @@ const s = {
     background: '#FEF2F2',
     border: '1px solid #FECACA',
     borderRadius: '5px',
-    padding: '8px 12px',
+    padding: '8px 8px',
   },
   errorText: {
     fontSize: '12px',
@@ -430,7 +430,7 @@ const s = {
     background: '#FFFBEB',
     border: '1px solid #FDE68A',
     borderRadius: '5px',
-    padding: '8px 12px',
+    padding: '8px 8px',
   },
   warningText: {
     fontSize: '12px',
@@ -442,7 +442,7 @@ const s = {
     background: '#F0FDF4',
     border: '1px solid #BBF7D0',
     borderRadius: '5px',
-    padding: '8px 12px',
+    padding: '8px 8px',
   },
   successText: {
     fontSize: '12px',

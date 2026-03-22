@@ -224,6 +224,9 @@ function ReportBuilder({ reportId, onBack }: { reportId: string; onBack: () => v
   };
 
   const warnIfEmpty = (): boolean => {
+    if (report.pages.length === 0) {
+      return confirm('Report has no charts. Add charts before exporting?') === false;
+    }
     if (!report.title && !report.clientName) {
       return confirm('Report title and client name are empty. Export anyway?');
     }
@@ -274,7 +277,7 @@ function ReportBuilder({ reportId, onBack }: { reportId: string; onBack: () => v
       {/* Metadata bar */}
       <div style={{
         display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: 8,
-        background: '#fff', border: '1px solid #E8E0D4', borderRadius: 8, padding: 14, marginBottom: 16,
+        background: '#fff', border: '1px solid #E8E0D4', borderRadius: 8, padding: 16, marginBottom: 16,
       }}>
         <div><p style={s.label}>Client name</p><input style={s.input} value={report.clientName} onChange={(e) => updateReport({ clientName: e.target.value })} placeholder="Acme Corp" /></div>
         <div><p style={s.label}>Firm name</p><input style={s.input} value={report.firmName} onChange={(e) => updateReport({ firmName: e.target.value })} placeholder="Your firm" /></div>
@@ -295,7 +298,7 @@ function ReportBuilder({ reportId, onBack }: { reportId: string; onBack: () => v
       <div className="cc-report-grid">
 
         {/* Page list (left) */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           <p style={{ ...s.label, marginBottom: 4 }}>Pages</p>
 
           {/* Cover page */}
@@ -383,7 +386,7 @@ function ReportBuilder({ reportId, onBack }: { reportId: string; onBack: () => v
               <p style={{ margin: 0 }}>Go to <a href="/" style={{ color: '#E3120B' }}>Charts</a>, create a chart, and it will appear here.</p>
             </div>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 6, maxHeight: 500, overflowY: 'auto' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8, maxHeight: 500, overflowY: 'auto' }}>
               {gallery.map((chart) => (
                 <div
                   key={chart.id}

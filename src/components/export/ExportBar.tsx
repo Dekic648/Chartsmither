@@ -123,7 +123,7 @@ const ExportBar: React.FC<ExportBarProps> = ({ chartRef, title }) => {
       </div>
 
       {status && (
-        <p style={{ fontSize: 12, color: status.includes('failed') ? '#B91C1C' : '#7A7468', margin: '6px 0 0' }}>
+        <p style={{ fontSize: 12, color: status.includes('failed') ? '#B91C1C' : '#7A7468', margin: '8px 0 0' }}>
           {status}
         </p>
       )}

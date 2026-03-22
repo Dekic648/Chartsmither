@@ -338,4 +338,9 @@ code {
   .cc-quickstart-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .cc-editor-grid > div:last-child {
+    max-height: 70vh;
+    overflow-y: auto;
+  }
 }
